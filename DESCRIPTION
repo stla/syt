@@ -1,0 +1,13 @@
+Package: syt
+Type: Package
+Title: Standard Young Tableaux
+Version: 0.1.0
+Author: Stéphane Laurent
+Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
+Description: Standard Young tableaux: enumeration, counting, random generation, and RSK correspondence.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: Matrix, partitions, utils
+Suggests: testthat
+RoxygenNote: 6.0.1
