@@ -1,7 +1,7 @@
 .syt2matrix <- function(syt){
   Matrix::sparseMatrix(i = rep(seq_along(syt), times=lengths(syt)),
                        j = unlist(sapply(lengths(syt), seq_len)),
-                       x = unlist(syt))
+                       x = as.integer(unlist(syt)))
 }
 
 #' Standard Young tableau as sparse matrix
@@ -23,7 +23,8 @@ syt2matrix <- function(syt){
 
 
 .matrix2syt <- function(M){
-  sapply(seq_len(nrow(M)), function(i) removezeros(M[i,]), simplify = FALSE)
+  sapply(seq_len(nrow(M)),
+         function(i) as.integer(removezeros(M[i,])), simplify = FALSE)
 }
 
 #' Standard Young tableau from a matrix

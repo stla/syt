@@ -7,7 +7,7 @@
 hooks(lambda)
 }
 \arguments{
-\item{lambda}{partition}
+\item{lambda}{integer partition}
 }
 \value{
 The hooks of the partition in a list.

@@ -55,7 +55,7 @@ ytbl <- function(lambda, a, more){
     return(list(a=a, more=FALSE));
   }
 
-  for (j in seq_len(N-1L)){
+  for(j in seq_len(N-1L)){
     if(a[j+1L] < a[j]){
       return(list(a=a, more=TRUE))
     }
@@ -67,7 +67,7 @@ ytbl <- function(lambda, a, more){
 
 #' Enumeration of standard Young tableaux
 #' @description Generates all standard Young tableaux of a given shape.
-#' @param lambda shape
+#' @param lambda shape, an integer partition
 #'
 #' @return A list of standard Young tableaux.
 #' @export
@@ -84,3 +84,17 @@ sytx <- function(lambda){
   }
   lapply(As, vector2syt)
 }
+
+islastsyt <- function(syt){
+  a <- syt2vector(syt)
+  N <- sum(a)
+  for(j in seq_len(N-1L)){
+    if(a[j+1L] < a[j]){
+      return(FALSE)
+    }
+  }
+  TRUE
+}
+
+# firstsyt <- function(lambda)
+# nextsyt <- function(syt)

@@ -1,6 +1,6 @@
 #' Random standard Young tableau
 #' @description Uniform sampling of a standard Young tableau of a given shape.
-#' @param lambda shape
+#' @param lambda shape, an integer partition
 #'
 #' @return A standard Young tableau of shape \code{lambda}.
 #' @export
@@ -45,7 +45,7 @@ rsyt <- function(lambda){
     }
     lambda[i] <- lambda[i] - 1L
     a[j] <- a[j] - 1L
-    a[N-m+1] <- i
+    a[N-m+1L] <- i
   }
   return(vector2syt(a))
 }

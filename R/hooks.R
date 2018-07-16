@@ -1,7 +1,7 @@
 #' Hooks
 #' @description Hooks of a given partition.
 #'
-#' @param lambda partition
+#' @param lambda integer partition
 #'
 #' @return The hooks of the partition in a list.
 #' @export
@@ -46,9 +46,9 @@ hooklengths <- function(lambda){
 #' Number of standard Young tableaux
 #' @description Number of standard Young tableaux of a given shape.
 #'
-#' @param lambda a partition, the shape
+#' @param lambda an integer partition, the shape
 #'
-#' @return The number of standard Young tableaux of shape \code{lambda}.
+#' @return An integer, the number of standard Young tableaux of shape \code{lambda}.
 #' @export
 #'
 #' @examples

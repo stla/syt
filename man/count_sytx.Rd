@@ -7,10 +7,10 @@
 count_sytx(lambda)
 }
 \arguments{
-\item{lambda}{a partition, the shape}
+\item{lambda}{an integer partition, the shape}
 }
 \value{
-The number of standard Young tableaux of shape \code{lambda}.
+An integer, the number of standard Young tableaux of shape \code{lambda}.
 }
 \description{
 Number of standard Young tableaux of a given shape.

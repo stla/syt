@@ -7,7 +7,7 @@
 rsyt(lambda)
 }
 \arguments{
-\item{lambda}{shape}
+\item{lambda}{shape, an integer partition}
 }
 \value{
 A standard Young tableau of shape \code{lambda}.
