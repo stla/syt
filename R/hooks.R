@@ -10,7 +10,7 @@
 #' @examples
 #' hooks(c(4,2))
 hooks <- function(lambda){
-  lambda <- as.integer(lambda)
+  lambda <- as.integer(checkPartition(lambda))
   dlambda <- partitions::conjugate(lambda)
   out <- vector("list", length(lambda))
   for(i in seq_along(lambda)){
@@ -55,7 +55,16 @@ hooklengths <- function(lambda){
 #' count_sytx(c(5,4,1))
 #' length(sytx(c(5,4,1)))
 count_sytx <- function(lambda){
-  N <- sum(lambda)
-  factorial(N)/prod(unlist(hooklengths(lambda)))
+  numterms <- c()
+  denterms <- unlist(hooklengths(lambda))
+  denterms <- denterms[-which(denterms==1L)]
+  for(i in seq_len(sum(lambda))[-1L]){
+    if(!is.na(idx <- match(i,denterms))){
+      denterms <- denterms[-idx]
+    }else{
+      numterms <- c(numterms,i)
+    }
+  }
+  prod(numterms)/prod(denterms)
 }
 

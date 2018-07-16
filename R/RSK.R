@@ -24,9 +24,12 @@ bump <- function(P, Q, e, i){
 #' @examples
 #' RS(c(1, 3, 6, 4, 7, 5, 2))
 RS <- function(sigma){
+  if(any(sort(sigma) != seq_along(sigma))){
+    stop("`sigma` is not a permutation", call. = FALSE)
+  }
   sigma <- as.integer(sigma)
   out <- bump(list(), list(), sigma[1L], 1L)
-  for(i in 2L:length(sigma)){
+  for(i in seq_along(sigma)[-1L]){
     out <- bump(out$P, out$Q, sigma[i], i)
   }
   return(out)

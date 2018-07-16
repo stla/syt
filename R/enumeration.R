@@ -75,6 +75,7 @@ ytbl <- function(lambda, a, more){
 #' @examples
 #' sytx(c(5,2))
 sytx <- function(lambda){
+  lambda <- checkPartition(lambda)
   nextA <- ytbl(lambda, integer(sum(lambda)), FALSE)
   As <- list(nextA$a)
   while(nextA$more){

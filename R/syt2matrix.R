@@ -29,5 +29,5 @@ syt2matrix <- function(syt){
 #' M <- rbind(c(1,2,6), c(3,5,0), c(4,0,0))
 #' matrix2syt(M)
 matrix2syt <- function(M){
-  sapply(1L:nrow(M), function(i) removezeros(M[i,]), simplify = FALSE)
+  sapply(seq_len(nrow(M)), function(i) removezeros(M[i,]), simplify = FALSE)
 }
