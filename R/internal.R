@@ -51,6 +51,7 @@ checkSYTrows <- function(syt){
 isSYT <- function(syt){
   contents <- unlist(syt)
   N <- length(contents)
+  is.list(syt) &&
   setequal(contents, 1L:N) &&
     checkSYTrows(syt) &&
     checkSYTrows(.dsyt(syt))

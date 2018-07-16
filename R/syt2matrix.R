@@ -27,7 +27,7 @@ syt2matrix <- function(syt){
 }
 
 #' Standard Young tableau from a matrix
-#' @description Converts a matrix to a standard Young tableau
+#' @description Converts a matrix to a standard Young tableau.
 #'
 #' @param M a matrix
 #'

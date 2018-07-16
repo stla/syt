@@ -13,7 +13,7 @@ matrix2syt(M)
 A standard Young tableau.
 }
 \description{
-Converts a matrix to a standard Young tableau
+Converts a matrix to a standard Young tableau.
 }
 \examples{
 M <- rbind(c(1,2,6), c(3,5,0), c(4,0,0))
