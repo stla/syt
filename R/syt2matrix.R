@@ -1,3 +1,9 @@
+.syt2matrix <- function(syt){
+  Matrix::sparseMatrix(i = rep(seq_along(syt), times=lengths(syt)),
+                       j = unlist(sapply(lengths(syt), seq_len)),
+                       x = unlist(syt))
+}
+
 #' Standard Young tableau as sparse matrix
 #' @description Representation of a standard Young tableau as a sparse matrix.
 #'
@@ -11,23 +17,31 @@
 #' syt <- list(c(1,2,6), c(3,5), 4)
 #' syt2matrix(syt)
 syt2matrix <- function(syt){
-  Matrix::sparseMatrix(i = rep(seq_along(syt), times=lengths(syt)),
-                       j = unlist(sapply(lengths(syt), seq_len)),
-                       x = unlist(syt))
+  checkSYT(syt)
+  .syt2matrix(syt)
 }
 
+
+.matrix2syt <- function(M){
+  sapply(seq_len(nrow(M)), function(i) removezeros(M[i,]), simplify = FALSE)
+}
 
 #' Standard Young tableau from a matrix
 #' @description Converts a matrix to a standard Young tableau
 #'
 #' @param M a matrix
 #'
-#' @return A standard Young tableau
+#' @return A standard Young tableau.
 #' @export
 #'
 #' @examples
 #' M <- rbind(c(1,2,6), c(3,5,0), c(4,0,0))
 #' matrix2syt(M)
 matrix2syt <- function(M){
-  sapply(seq_len(nrow(M)), function(i) removezeros(M[i,]), simplify = FALSE)
+  out <- .matrix2syt(M)
+  if(isSYT(out)){
+    return(out)
+  }else{
+    stop("Invalid matrix.")
+  }
 }

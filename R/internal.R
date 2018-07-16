@@ -43,3 +43,23 @@ checkPartition <- function(x){
     stop("`lambda` is not a partition", call. = FALSE)
   }
 }
+
+checkSYTrows <- function(syt){
+  all(sapply(syt, function(x) all(diff(x)>0)))
+}
+
+isSYT <- function(syt){
+  contents <- unlist(syt)
+  N <- length(contents)
+  setequal(contents, 1L:N) &&
+    checkSYTrows(syt) &&
+    checkSYTrows(.dsyt(syt))
+}
+
+checkSYT <- function(syt){
+  if(!isSYT(syt)){
+    stop("Not a standard Young tableau", call. = FALSE)
+  }else{
+    return(invisible())
+  }
+}

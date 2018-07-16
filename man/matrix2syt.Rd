@@ -10,7 +10,7 @@ matrix2syt(M)
 \item{M}{a matrix}
 }
 \value{
-A standard Young tableau
+A standard Young tableau.
 }
 \description{
 Converts a matrix to a standard Young tableau
