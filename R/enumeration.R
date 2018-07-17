@@ -82,11 +82,11 @@ sytx <- function(lambda){
     nextA <- ytbl(lambda, nextA$a, TRUE)
     As <- c(As, list(nextA$a))
   }
-  lapply(As, vector2syt)
+  lapply(As, .ballot2syt)
 }
 
 islastsyt <- function(syt){
-  a <- syt2vector(syt)
+  a <- syt2ballot(syt)
   N <- length(a)
   for(j in seq_len(N-1L)){
     if(a[j+1L] < a[j]){
@@ -126,7 +126,7 @@ islastsyt <- function(syt){
     ir <- 1L
   }
 
-  vector2syt(a)
+  .ballot2syt(a)
 }
 
 .nextsyt <- function(syt){
@@ -134,7 +134,7 @@ islastsyt <- function(syt){
   if(islastsyt(syt)){
     return(NULL)
   }
-  a <- syt2vector(syt)
+  a <- .syt2ballot(syt)
   N <- sum(lengths(syt))
   lambda <- integer(N); lambda[1L] <- 1L
   isave <- 0L;
@@ -148,7 +148,7 @@ islastsyt <- function(syt){
   }
 
   if(isave == 0L){
-    return(vector2syt(a))
+    return(.ballot2syt(a))
   }
 
   it <- lambda[a[isave]+1L]
@@ -195,6 +195,6 @@ firstsyt <- function(lambda){
 #' syt <- firstsyt(c(4,2,1))
 #' nextsyt(syt)
 nextsyt <- function(syt){
-  checkSYT(syt)
+  checkSYT(syt) # c'est déjà checké par islastsyt
   .nextsyt(syt)
 }

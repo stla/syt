@@ -1,28 +1,3 @@
-# "VECTOR" = "ballot sequence"
-vector2syt <- function(A){
-  # A[i] is the row containing i
-  Y <- vector("list", max(A))
-  for(i in seq_along(A)){
-    Y[[A[i]]] <- c(Y[[A[i]]], i)
-  }
-  Y
-}
-
-syt2vector <- function(Y){
-  N <- sum(lengths(Y))
-  A <- integer(0L)
-  for(i in 1L:N){
-    k <- 0L
-    j <- integer(0L)
-    while(length(j)==0L){
-      k <- k+1L
-      j <- which(Y[[k]]==i)
-      if(length(j)) A <- c(A,k)
-    }
-  }
-  A
-}
-
 #' @importFrom utils head
 removezeros <- function(x){ # e.g c(3,1,0,0) -> c(3,1)
   i <- match(0L, x)

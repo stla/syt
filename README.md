@@ -15,3 +15,5 @@ devtools::install_github("stla/syt")
 - Count of all SYTx of a given shape
 
 - Conversion to and from paths on the Young graph
+
+- Conversion to and from ballot sequences

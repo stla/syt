@@ -47,6 +47,6 @@ rsyt <- function(lambda){
     a[j] <- a[j] - 1L
     a[N-m+1L] <- i
   }
-  return(vector2syt(a))
+  return(.ballot2syt(a))
 }
 
