@@ -1,3 +1,4 @@
+# "VECTOR" = "ballot sequence"
 vector2syt <- function(A){
   # A[i] is the row containing i
   Y <- vector("list", max(A))
