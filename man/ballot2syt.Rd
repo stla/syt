@@ -20,3 +20,6 @@ Young tableau.
 a <- c(1,1,2,3,2,1)
 ballot2syt(a)
 }
+\seealso{
+\code{\link{syt2ballot}}
+}

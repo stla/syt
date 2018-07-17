@@ -21,3 +21,6 @@ corresponding standard Young tableau.
 path <- list(1, 2, c(2,1), c(3,1), c(3,1,1))
 gprocess2syt(path)
 }
+\seealso{
+\code{\link{syt2gprocess}}
+}

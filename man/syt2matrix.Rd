@@ -19,3 +19,6 @@ Representation of a standard Young tableau as a sparse matrix.
 syt <- list(c(1,2,6), c(3,5), 4)
 syt2matrix(syt)
 }
+\seealso{
+\code{\link{matrix2syt}}
+}

@@ -19,3 +19,6 @@ Number of standard Young tableaux of a given shape.
 count_sytx(c(5,4,1))
 length(sytx(c(5,4,1)))
 }
+\seealso{
+\code{\link{sytx}}
+}

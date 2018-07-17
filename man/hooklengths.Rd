@@ -7,14 +7,17 @@
 hooklengths(lambda)
 }
 \arguments{
-\item{lambda}{a partition}
+\item{lambda}{an integer partition}
 }
 \value{
 The hook lengths of the partition, given in a list.
 }
 \description{
-Hook lengths of a given partition.
+Hook lengths of a given integerpartition.
 }
 \examples{
 hooklengths(c(4,2))
+}
+\seealso{
+\code{\link{hooks}}
 }

@@ -10,6 +10,7 @@
 #' @param syt a standard Young tableau
 #'
 #' @return A sparse matrix.
+#' @seealso \code{\link{matrix2syt}}
 #' @importFrom Matrix sparseMatrix
 #' @export
 #'
@@ -33,6 +34,7 @@ syt2matrix <- function(syt){
 #' @param M a matrix
 #'
 #' @return A standard Young tableau.
+#' @seealso \code{\link{syt2matrix}}
 #' @export
 #'
 #' @examples

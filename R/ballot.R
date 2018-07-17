@@ -46,6 +46,7 @@ checkBallot <- function(a){
 #' @param syt standard Young tableau
 #'
 #' @return A ballot sequence.
+#' @seealso \code{\link{ballot2syt}}
 #' @export
 #'
 #' @examples
@@ -63,6 +64,7 @@ syt2ballot <- function(syt){
 #' @param a ballot sequence
 #'
 #' @return A standard Young tableau.
+#' @seealso \code{\link{syt2ballot}}
 #' @export
 #'
 #' @examples

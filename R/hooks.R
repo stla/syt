@@ -1,9 +1,10 @@
 #' Hooks
-#' @description Hooks of a given partition.
+#' @description Hooks of a given integer partition.
 #'
 #' @param lambda integer partition
 #'
 #' @return The hooks of the partition in a list.
+#' @seealso \code{\link{hooklengths}}
 #' @export
 #' @importFrom partitions conjugate
 #'
@@ -28,11 +29,12 @@ hooks <- function(lambda){
 }
 
 #' Hook lengths
-#' @description Hook lengths of a given partition.
+#' @description Hook lengths of a given integerpartition.
 #'
-#' @param lambda a partition
+#' @param lambda an integer partition
 #'
 #' @return The hook lengths of the partition, given in a list.
+#' @seealso \code{\link{hooks}}
 #' @export
 #'
 #' @examples
@@ -49,6 +51,7 @@ hooklengths <- function(lambda){
 #' @param lambda an integer partition, the shape
 #'
 #' @return An integer, the number of standard Young tableaux of shape \code{lambda}.
+#' @seealso \code{\link{sytx}}
 #' @export
 #'
 #' @examples

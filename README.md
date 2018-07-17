@@ -17,3 +17,5 @@ devtools::install_github("stla/syt")
 - Conversion to and from paths on the Young graph
 
 - Conversion to and from ballot sequences
+
+- Robinson-Schensted correspondence

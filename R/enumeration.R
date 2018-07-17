@@ -85,8 +85,8 @@ sytx <- function(lambda){
   lapply(As, .ballot2syt)
 }
 
-islastsyt <- function(syt){
-  a <- syt2ballot(syt)
+.islastsyt <- function(syt){
+  a <- .syt2ballot(syt)
   N <- length(a)
   for(j in seq_len(N-1L)){
     if(a[j+1L] < a[j]){
@@ -96,8 +96,7 @@ islastsyt <- function(syt){
   TRUE
 }
 
-.firstsyt <- function(lambda, a){ # firstsyt = .firstsyt(lambda, integer(N))
-  #lambda <- checkPartition(lambda)
+.firstsyt <- function(lambda, a){
   N <- it <- sum(lambda)
 
   if(N==1L){
@@ -130,8 +129,7 @@ islastsyt <- function(syt){
 }
 
 .nextsyt <- function(syt){
-  #checkSYT(syt)
-  if(islastsyt(syt)){
+  if(.islastsyt(syt)){
     return(NULL)
   }
   a <- .syt2ballot(syt)
@@ -195,6 +193,6 @@ firstsyt <- function(lambda){
 #' syt <- firstsyt(c(4,2,1))
 #' nextsyt(syt)
 nextsyt <- function(syt){
-  checkSYT(syt) # c'est déjà checké par islastsyt
+  checkSYT(syt)
   .nextsyt(syt)
 }
