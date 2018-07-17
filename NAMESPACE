@@ -3,7 +3,7 @@
 export(RS)
 export(ballot2syt)
 export(count_sytx)
-export(dsyt)
+export(dualsyt)
 export(firstsyt)
 export(gprocess2syt)
 export(hooklengths)

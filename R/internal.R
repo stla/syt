@@ -30,7 +30,7 @@ isSYT <- function(syt){
   is.list(syt) &&
   setequal(contents, 1L:N) &&
     checkSYTrows(syt) &&
-    checkSYTrows(.dsyt(syt))
+    checkSYTrows(.dualsyt(syt))
 }
 
 checkSYT <- function(syt){

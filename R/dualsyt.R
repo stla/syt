@@ -1,4 +1,4 @@
-.dsyt <- function(syt){
+.dualsyt <- function(syt){
   .matrix2syt(t(as.matrix(.syt2matrix(syt))))
 }
 
@@ -12,7 +12,8 @@
 #'
 #' @examples
 #' syt <- list(c(1,2,6), c(3,5), 4)
-#' dsyt(syt)
-dsyt <- function(syt){
-  lapply(matrix2syt(t(as.matrix(syt2matrix(syt)))), as.integer)
+#' dualsyt(syt)
+dualsyt <- function(syt){
+  checkSYT(syt)
+  lapply(.dualsyt(syt), as.integer)
 }
