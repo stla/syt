@@ -20,6 +20,8 @@ devtools::install_github("stla/syt")
 
 - Conversion to and from paths on the Young graph
 
+- Plancherel growth process
+
 ![](http://stla.github.io/stlapblog/posts/assets/img/young_yng_path.png)
 
 ```
