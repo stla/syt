@@ -64,7 +64,6 @@ ytbl <- function(lambda, a, more){
   return(list(a=a, more=FALSE))
 }
 
-
 #' Enumeration of standard Young tableaux
 #' @description Generates all standard Young tableaux of a given shape.
 #' @param lambda shape, an integer partition
@@ -73,8 +72,8 @@ ytbl <- function(lambda, a, more){
 #' @export
 #'
 #' @examples
-#' sytx(c(5,2))
-sytx <- function(lambda){
+#' all_sytx(c(5,2))
+all_sytx <- function(lambda){
   lambda <- checkPartition(lambda)
   nextA <- ytbl(lambda, integer(sum(lambda)), FALSE)
   As <- list(nextA$a)

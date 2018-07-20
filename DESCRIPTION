@@ -2,6 +2,7 @@ Package: syt
 Type: Package
 Title: Standard Young Tableaux
 Version: 0.1.0
+Date: 2018-07-20
 Author: Stéphane Laurent
 Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
 Description: Standard Young tableaux: enumeration, counting, random generation, and RSK correspondence.

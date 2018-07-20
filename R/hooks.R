@@ -51,12 +51,12 @@ hooklengths <- function(lambda){
 #' @param lambda an integer partition, the shape
 #'
 #' @return An integer, the number of standard Young tableaux of shape \code{lambda}.
-#' @seealso \code{\link{sytx}}
+#' @seealso \code{\link{all_sytx}}
 #' @export
 #'
 #' @examples
 #' count_sytx(c(5,4,1))
-#' length(sytx(c(5,4,1)))
+#' length(all_sytx(c(5,4,1)))
 count_sytx <- function(lambda){
   numterms <- c()
   denterms <- unlist(hooklengths(lambda))
