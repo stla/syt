@@ -1,5 +1,6 @@
 #' Random standard Young tableau
 #' @description Uniform sampling of a standard Young tableau of a given shape.
+#'
 #' @param lambda shape, an integer partition
 #'
 #' @return A standard Young tableau of shape \code{lambda}.
