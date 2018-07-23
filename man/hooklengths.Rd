@@ -13,7 +13,7 @@ hooklengths(lambda)
 The hook lengths of the partition, given in a list.
 }
 \description{
-Hook lengths of a given integerpartition.
+Hook lengths of a given integer partition.
 }
 \examples{
 hooklengths(c(4,2))

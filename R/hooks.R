@@ -29,7 +29,7 @@ hooks <- function(lambda){
 }
 
 #' Hook lengths
-#' @description Hook lengths of a given integerpartition.
+#' @description Hook lengths of a given integer partition.
 #'
 #' @param lambda an integer partition
 #'
