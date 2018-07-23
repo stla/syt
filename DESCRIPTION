@@ -11,5 +11,6 @@ Encoding: UTF-8
 LazyData: true
 Imports: Matrix, partitions, utils
 Suggests: testthat
+URL: https://github.com/stla/syt
 BugReports: https://github.com/stla/syt/issues
 RoxygenNote: 6.0.1
