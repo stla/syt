@@ -2,8 +2,6 @@ checkBallot <- function(a){
   if(!arePositiveIntegers(a-1)){
     stop("Not a ballot sequence.", call.=FALSE)
   }
-  n <- length(a)
-  M <- max(a)
   for(k in seq_along(a)){
     init <- head(a,k)
     for(r in seq_len(max(init))[-1L]){

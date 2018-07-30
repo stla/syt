@@ -1,4 +1,4 @@
-# syt: Standard Young Tableaux
+# `syt`: Standard Young Tableaux
 
 ## Installation
 
