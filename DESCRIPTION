@@ -1,7 +1,7 @@
 Package: syt
 Type: Package
 Title: Standard Young Tableaux
-Version: 0.1.0
+Version: 0.1.0.9000
 Date: 2018-07-30
 Author: Stéphane Laurent
 Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
