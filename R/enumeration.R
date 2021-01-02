@@ -96,6 +96,7 @@ all_sytx <- function(lambda){
 }
 
 .firstsyt <- function(lambda, a){
+  lambda <- removezeros(lambda)
   N <- it <- sum(lambda)
 
   if(N==1L){
