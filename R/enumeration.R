@@ -1,10 +1,11 @@
-ytbl <- function(lambda, a, more){
+ytbl <- function(N, lambda, a, more){
 
-  N <- it <- sum(lambda)
+  #N <- it <- sum(lambda)
+  it <- N
 
   if(more){
     lambda <- integer(N); lambda[1L] <- 1L
-    isave <- 0L;
+    isave <- 0L
 
     for(i in 2L:N){
       lambda[a[i]] <- lambda[a[i]] + 1L
@@ -52,7 +53,7 @@ ytbl <- function(lambda, a, more){
   }
 
   if(N == 1L){
-    return(list(a=a, more=FALSE));
+    return(list(a=a, more=FALSE))
   }
 
   for(j in seq_len(N-1L)){
@@ -75,10 +76,11 @@ ytbl <- function(lambda, a, more){
 #' all_sytx(c(5,2))
 all_sytx <- function(lambda){
   lambda <- checkPartition(lambda)
-  nextA <- ytbl(lambda, integer(sum(lambda)), FALSE)
+  N <- sum(lambda)
+  nextA <- ytbl(N, lambda, integer(N), FALSE)
   As <- list(nextA$a)
   while(nextA$more){
-    nextA <- ytbl(lambda, nextA$a, TRUE)
+    nextA <- ytbl(N, lambda, nextA$a, TRUE)
     As <- c(As, list(nextA$a))
   }
   lapply(As, .ballot2syt)

@@ -30,11 +30,12 @@ checkBallot <- function(a){
 }
 
 .ballot2syt <- function(a){
-  syt <- vector("list", max(a))
-  for(i in seq_along(a)){
-    syt[[a[i]]] <- c(syt[[a[i]]], i)
-  }
-  syt
+  lapply(1L:max(a), function(i) which(a == i))
+  # syt <- vector("list", max(a))
+  # for(i in seq_along(a)){
+  #   syt[[a[i]]] <- c(syt[[a[i]]], i)
+  # }
+  # syt
 }
 
 #' Tableau as ballot sequence
