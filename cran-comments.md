@@ -1,15 +1,10 @@
 ## Test environments
 
-* Windows 7, R 3.4.4 and 3.5.1
+* Ubuntu 18.04, R-3.6.3
 * win-builder (devel and release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+OK
 
-* This is a new release.
-
-## Reverse dependencies
-
-This is a new release, so there are no reverse dependencies.
 
