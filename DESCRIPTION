@@ -1,16 +1,22 @@
-Package: syt
 Type: Package
+Package: syt
 Title: Standard Young Tableaux
-Version: 0.2.0
-Date: 2021-01-16
+Version: 0.3.0
+Date: 2023-12-02
 Author: Stéphane Laurent
 Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
-Description: Deals with standard Young tableaux (field of combinatorics). Performs enumeration, counting, random generation, the Robinson-Schensted correspondence, and conversion to and from paths on the Young lattice. 
+Description: Deals with standard Young tableaux (field of combinatorics).
+    Performs enumeration, counting, random generation, the
+    Robinson-Schensted correspondence, and conversion to and from paths on
+    the Young lattice.
 License: GPL-3
-Encoding: UTF-8
-LazyData: true
-Imports: Matrix, partitions, utils
-Suggests: testthat
 URL: https://github.com/stla/syt
 BugReports: https://github.com/stla/syt/issues
-RoxygenNote: 6.0.1
+Imports: 
+    Matrix,
+    partitions,
+    utils
+Suggests: 
+    testthat
+Encoding: UTF-8
+RoxygenNote: 7.2.3
