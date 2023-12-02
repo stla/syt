@@ -8,7 +8,8 @@ Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
 Description: Deals with standard Young tableaux (field of combinatorics).
     Performs enumeration, counting, random generation, the
     Robinson-Schensted correspondence, and conversion to and from paths on
-    the Young lattice.
+    the Young lattice. Also performs enumeration and counting of 
+    semistandard Young tableaux.
 License: GPL-3
 URL: https://github.com/stla/syt
 BugReports: https://github.com/stla/syt/issues
