@@ -9,11 +9,15 @@ isPositiveInteger <- function(x) {
 }
 
 arePositiveIntegers <- function(x){
+  all(x > 0 & floor(x) == x)
+}
+
+areNonnegativeIntegers <- function(x){
   all(x >= 0 & floor(x) == x)
 }
 
 isPartition <- function(x){
-  is.numeric(x) && arePositiveIntegers(x) && all(diff(x) <= 0)
+  is.numeric(x) && areNonnegativeIntegers(x) && all(diff(x) <= 0)
 }
 
 checkPartition <- function(x){

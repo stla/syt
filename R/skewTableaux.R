@@ -229,7 +229,7 @@ dualSkewTableau <- function(skewTableau) {
 isSemistandardSkewTableau <- function(skewTableau) {
   stopifnot(isSkewTableau(skewTableau))
   contents <- Filter(Negate(is.na), unlist(skewTableau))
-  checkContents <- arePositiveIntegers(contents - 1L)
+  checkContents <- arePositiveIntegers(contents)
   checkRows <- vapply(skewTableau, function(row) {
     isWeaklyIncreasing(Filter(Negate(is.na), row))
   }, logical(1L))

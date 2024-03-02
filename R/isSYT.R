@@ -33,7 +33,7 @@ isSYT <- function(tableau){
 isSSYT <- function(tableau){
   stopifnot(isTableau(tableau))
   contents <- unlist(tableau)
-  arePositiveIntegers(contents - 1L) &&
+  arePositiveIntegers(contents) &&
     checkSSYTrows(tableau) && 
     checkSYTrows(.dualTableau(tableau))
 }

@@ -1,13 +1,13 @@
 checkBallot <- function(a){
-  if(!arePositiveIntegers(a-1)){
-    stop("Not a ballot sequence.", call.=FALSE)
+  if(!arePositiveIntegers(a)){
+    stop("Not a ballot sequence.", call. = FALSE)
   }
   for(k in seq_along(a)){
-    init <- head(a,k)
+    init <- head(a, k)
     for(r in seq_len(max(init))){
-      test <- length(which(init==r)) >= length(which(init==r+1L))
+      test <- length(which(init == r)) >= length(which(init == r+1L))
       if(!test){
-        stop("Not a ballot sequence.", call.=FALSE)
+        stop("Not a ballot sequence.", call. = FALSE)
       }
     }
   }
