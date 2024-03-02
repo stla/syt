@@ -2,6 +2,13 @@ diffSequence <- function(x) {
   c(diff(-x), x[length(x)])
 }
 
+mkSkewPartition <- function(skewpart) {
+  lapply(skewpart, function(row) {
+    offset <- row[[1L]]
+    c(rep(NA_integer_, offset), row[[2L]])
+  })
+}
+
 #' @title Semistandard skew tableaux
 #' @description Enumeration of all semistandard skew tableaux with given shape 
 #'   and given maximum entry.
@@ -65,12 +72,7 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
   }
   ds <- diffSequence(as)
   results <- worker(as, bs, ds, rep(1L, bs[1L]))
-  lapply(results, function(skewpart) {
-    lapply(skewpart, function(row) {
-      offset <- row[[1L]]
-      c(rep(NA_integer_, offset), row[[2L]])
-    })
-  })
+  lapply(results, mkSkewPartition)
 }
 
 #' @title Check whether a tableau is a skew tableau
@@ -210,10 +212,7 @@ dualSkewTableau <- function(skewTableau) {
     list(offsets[[i]], contents[[i]])
   })
   skewpart <- go(axs)
-  lapply(skewpart, function(row) {
-    offset <- row[[1L]]
-    c(rep(NA_integer_, offset), row[[2L]])
-  })
+  mkSkewPartition(skewpart)
 }
 
 #' @title Check whether a skew tableau is semistandard

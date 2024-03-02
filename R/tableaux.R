@@ -49,3 +49,26 @@ dualTableau <- function(tableau) {
   stopifnot(isTableau(tableau))
   .dualTableau(tableau)
 }
+
+#' @title Pretty tableau
+#' @description Pretty form of a tableau.
+#'
+#' @param tableau a tableau
+#'
+#' @return A '\code{noquote}' character matrix.
+#' @export
+#'
+#' @examples
+#' tbl <- list(c(0, 2, 1, 1), c(4, 1), c(1, 2))
+#' prettyTableau(tbl)
+prettyTableau <- function(tableau) {
+  stopifnot(isTableau(tableau))
+  ls <- lengths(tableau)
+  n <- ls[1L]
+  M <- t(vapply(seq_along(ls), function(i) {
+    c(as.character(tableau[[i]]), rep("", n - ls[i]))
+  }, character(n)))
+  rownames(M) <- paste0(seq_len(nrow(M)), " ->")
+  colnames(M) <- rep("", ncol(M))
+  noquote(M)
+}
