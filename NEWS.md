@@ -1,3 +1,10 @@
+# syt 0.4.0
+
+* New functions for general tableaux.
+
+* New functions for skew tableaux.
+
+
 # syt 0.3.0
 
 * Semistandard Young tableaux: enumeration and count.
