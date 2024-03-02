@@ -49,7 +49,6 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
       b <- bbs[1L]
       bs <- bbs[-1L]
       d <- dds[1L]
-      print(d)
       ds <- dds[-1L]
       do.call(c, lapply(row(b, 1L, lb), function(this) {
         lbprime <- c(rep(1L, d), this + 1L)
@@ -62,5 +61,38 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
   as <- c(mu, rep(0L, length(lambda) - length(mu)))
   bs <- lambda - c(mu, rep(0L, length(lambda) - length(mu)))
   ds <- diffSequence(as)
-  worker(as, bs, ds, rep(1L, 100))#bs[1L]))
+  results <- worker(as, bs, ds, rep(1L, bs[1L]))
+  lapply(results, function(skewpart) {
+    lapply(skewpart, function(row) {
+      offset <- row[[1L]]
+      c(rep(NA_integer_, offset), row[[2L]])
+    })
+  })
+}
+
+.skewTableau2matrix <- function(tableau) {
+  ls <- lengths(tableau)
+  nrows <- length(tableau)
+  M <- matrix(NA_integer_, nrow = nrows, ncol = ls[1L])
+  for(i in seq_len(nrows)) {
+    M[i, seq_len(ls[i])] <- tableau[[i]]
+  }
+  ij <- which(!is.na(M), arr.ind = TRUE)
+  sparseMatrix(i = ij[, 1L],
+               j = ij[, 2L],
+               x = M[ij])
+}
+
+prettySkewTableau <- function(skewTableau) {
+  M <- .skewTableau2matrix(skewTableau)
+  ls <- lengths(skewTableau)
+  formattedM <- formatSparseM(M)
+  n <- ncol(formattedM)
+  furtherFormattedM <- t(vapply(seq_along(ls), function(i) {
+    row <- formattedM[i, ]
+    row[-seq_len(ls[i])] <- ""
+    row
+  }, character(n)))
+  rownames(furtherFormattedM) <- paste0(seq_len(nrow(formattedM)), " ->")
+  noquote(furtherFormattedM)
 }
