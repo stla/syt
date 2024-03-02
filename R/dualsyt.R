@@ -1,5 +1,5 @@
 .dualsyt <- function(syt){
-  .matrix2syt(t(as.matrix(.syt2matrix(syt))))
+  .matrix2syt(t(as.matrix(.tableau2matrix(syt))))
 }
 
 #' Dual tableau
