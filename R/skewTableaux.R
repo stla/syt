@@ -113,3 +113,104 @@ prettySkewTableau <- function(skewTableau) {
   rownames(furtherFormattedM) <- paste0(seq_len(nrow(formattedM)), " ->")
   noquote(furtherFormattedM)
 }
+
+
+
+
+# dualSkewTableau :: forall a. SkewTableau a -> SkewTableau a
+# dualSkewTableau (SkewTableau axs) = SkewTableau (go axs) where
+# 
+#   go []  = []  
+#   go axs = case sub 0 axs of
+#     (0,[]) -> []
+#     this   -> this : go (strip axs)
+# 
+#   strip :: [(Int,[a])] -> [(Int,[a])]
+#   strip []            = []
+#   strip ((a,xs):rest) = if a>0 
+#     then (a-1,xs) : strip rest
+#     else case xs of
+#       []     -> []
+#       (z:zs) -> case zs of
+#         []      -> []
+#         _       -> (0,zs) : strip rest
+# 
+#   sub :: Int -> [(Int,[a])] -> (Int,[a])
+#   sub !b [] = (b,[])
+#   sub !b ((a,this):rest) = if a>0 
+#     then sub (b+1) rest  
+#     else (b,ys) where      
+#       ys = map head $ takeWhile (not . null) (this : map snd rest)
+
+dualSkewTableau <- function(skewTableau) {
+  sub <- function(b, sktbl) {
+    if(length(sktbl) == 0L) {
+      list(b, integer(0L))
+    } else {
+      athis <- sktbl[[1L]]
+      rest <- sktbl[-1L]
+      a <- athis[[1L]]
+      this <- athis[[2L]]
+      if(a > 0L) {
+        sub(b + 1L, rest)
+      } else {
+        L <- c(list(this), lapply(rest, `[[`, 2L))
+        L <- Filter(function(x) length(x) > 0L, L)
+        ys <- vapply(L, `[`, integer(1L), 1L)
+        list(b, ys)
+      }
+    }
+  }
+  strip <- function(sktbl) {
+    if(length(sktbl) == 0L) {
+      list()
+    } else {
+      axs <- sktbl[[1L]]
+      a <- axs[[1L]]
+      xs <- axs[[2L]]
+      rest <- sktbl[-1L]
+      if(a > 0L) {
+        c(list(list(a - 1L, xs)), strip(rest))
+      } else {
+        if(length(xs) == 0L) {
+          list()
+        } else {
+          z <- xs[1L]
+          zs <- xs[-1L]
+          if(length(xs) == 1L) {
+            list()
+          } else {
+            c(list(list(0L, zs)), strip(rest))
+          }
+        }
+      }
+    }
+  }
+  go <- function(axs) {
+    if(length(axs) == 0L) {
+      list()
+    } else {
+      this <- sub(0L, axs)
+      if(this[[1L]] == 0L && length(this[[2L]]) == 0L) {
+        list()
+      } else {
+        c(list(this), go(strip(axs)))
+      }
+    }
+  }
+  offsets <- lapply(skewTableau, function(row) {
+    sum(is.na(row))
+  })
+  contents <- lapply(skewTableau, function(row) {
+    Filter(Negate(is.na), as.integer(row))
+  })
+  axs <- lapply(seq_along(offsets), function(i) {
+    list(offsets[[i]], contents[[i]])
+  })
+  skewpart <- go(axs)
+  lapply(skewpart, function(row) {
+    offset <- row[[1L]]
+    c(rep(NA_integer_, offset), row[[2L]])
+  })
+}
+
