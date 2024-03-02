@@ -2,27 +2,27 @@ diffSequence <- function(x) {
   c(diff(-x), x[length(x)])
 }
 
-# semiStandardSkewTableaux :: Int -> SkewPartition -> [SkewTableau Int]
-# semiStandardSkewTableaux n (SkewPartition abs) = map SkewTableau stuff where
-# 
-#   stuff = worker as bs ds (repeat 1) 
-#   (as,bs) = unzip abs
-#   ds = _diffSequence as
-#   
-#   -- | @worker inner outerMinusInner innerdiffs lowerbound
-#   worker :: [Int] -> [Int] -> [Int] -> [Int] -> [[(Int,[Int])]]
-#   worker (a:as) (b:bs) (d:ds) lb = [ (a,this):rest 
-#                                    | this <- row b 1 lb 
-#                                    , let lb' = (replicate d 1 ++ map (+1) this) 
-#                                    , rest <- worker as bs ds lb' ] 
-#   worker []     _      _      _  = [ [] ]
-# 
-#   -- @row length minimum lowerbound@
-#   row 0  _  _       = [[]]
-#   row _  _  []      = []
-#   row !k !m (!a:as) = [ x:xs | x <- [(max a m)..n] , xs <- row (k-1) x as ] 
-
+#' @title Semistandard skew tableaux
+#' @description Enumeration of all semistandard skew tableaux with given shape 
+#'   and given maximum entry.
+#' 
+#' @param lambda,mu integer partitions defining the skew partition: 
+#'   \code{lambda} is the outer partition and \code{mu} is the inner partition 
+#'   (so \code{mu} must be a subpartition of \code{lambda})
+#' @param n a positive integer, the maximum entry of the skew tableaux
+#'
+#' @return The list of all semistandard skew tableaux whose shape is the skew 
+#'   partition defined by \code{lambda} and \code{mu} and with maximum entry 
+#'   \code{n}.
+#' @export
+#'
+#' @examples
+#' ssstx <- all_ssSkewTableaux(c(4, 3, 1), c(2, 2), 2)
+#' lapply(ssstx, prettySkewTableau)
 all_ssSkewTableaux <- function(lambda, mu, n) {
+  stopifnot(isPartition(lambda), isPartition(mu))
+  stopifnot(isPositiveInteger(n))
+  n <- as.integer(n)
   row <- function(k, m, aas) {
     if(k == 0L) {
       list(integer(0L))
@@ -58,8 +58,11 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
       }))
     }
   }
-  as <- c(mu, rep(0L, length(lambda) - length(mu)))
-  bs <- lambda - c(mu, rep(0L, length(lambda) - length(mu)))
+  as <- c(as.integer(mu), rep(0L, length(lambda) - length(mu)))
+  bs <- as.integer(lambda) - as
+  if(any(bs) < 0L) {
+    stop("The partition `mu` is not a subpartition of the partition `lambda`.")
+  }
   ds <- diffSequence(as)
   results <- worker(as, bs, ds, rep(1L, bs[1L]))
   lapply(results, function(skewpart) {
@@ -70,6 +73,8 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
   })
 }
 
+#' @importFrom Matrix sparseMatrix
+#' @noRd
 .skewTableau2matrix <- function(tableau) {
   ls <- lengths(tableau)
   nrows <- length(tableau)
@@ -83,6 +88,18 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
                x = M[ij])
 }
 
+#' @title Pretty skew tableau
+#' @description Pretty form of a skew tableau.
+#'
+#' @param skewTableau a skew tableau
+#'
+#' @return A '\code{noquote}' character matrix.
+#' @export
+#' @importFrom Matrix formatSparseM
+#'
+#' @examples
+#' tbl <- list(c(NA, NA, 1, 1), c(NA, 1), c(1, 2))
+#' prettySkewTableau(tbl)
 prettySkewTableau <- function(skewTableau) {
   M <- .skewTableau2matrix(skewTableau)
   ls <- lengths(skewTableau)
