@@ -179,12 +179,10 @@ dualSkewTableau <- function(skewTableau) {
         if(length(xs) == 0L) {
           list()
         } else {
-          z <- xs[1L]
-          zs <- xs[-1L]
           if(length(xs) == 1L) {
             list()
           } else {
-            c(list(list(0L, zs)), strip(rest))
+            c(list(list(0L, xs[-1L])), strip(rest))
           }
         }
       }
@@ -218,3 +216,44 @@ dualSkewTableau <- function(skewTableau) {
   })
 }
 
+#' @title Check whether a skew tableau is semistandard
+#' @description Check whether a skew tableau is a semistandard skew tableau.
+#'
+#' @param skewTableau a skew tableau
+#'
+#' @return A Boolean value.
+#' @export
+#'
+#' @examples
+#' tbl <- list(c(NA, NA, 1, 1), c(NA, 1), c(1, 2))
+#' isSemistandardSkewTableau(tbl)
+isSemistandardSkewTableau <- function(skewTableau) {
+  stopifnot(isSkewTableau(skewTableau))
+  contents <- Filter(Negate(is.na), unlist(skewTableau))
+  checkContents <- arePositiveIntegers(contents - 1L)
+  checkRows <- vapply(skewTableau, function(row) {
+    isWeaklyIncreasing(Filter(Negate(is.na), row))
+  }, logical(1L))
+  checkColumns <- vapply(dualSkewTableau(skewTableau), function(row) {
+    isStrictlyIncreasing(Filter(Negate(is.na), row))
+  }, logical(1L))
+  checkContents && all(checkRows) && all(checkColumns)
+}
+
+#' @title Check whether a skew tableau is standard
+#' @description Check whether a skew tableau is a standard skew tableau.
+#'
+#' @param skewTableau a skew tableau
+#'
+#' @return A Boolean value.
+#' @export
+#'
+#' @examples
+#' tbl <- list(c(NA, NA, 1, 1), c(NA, 1), c(1, 2))
+#' isStandardSkewTableau(tbl)
+isStandardSkewTableau <- function(skewTableau) {
+  stopifnot(isSkewTableau(skewTableau))
+  contents <- Filter(Negate(is.na), unlist(skewTableau))
+  isSemistandardSkewTableau(skewTableau) && 
+    setequal(contents, seq_along(contents))
+}

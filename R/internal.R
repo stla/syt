@@ -24,12 +24,20 @@ checkPartition <- function(x){
   }
 }
 
+isStrictlyIncreasing <- function(x) {
+  all(diff(x) > 0)
+}
+
+isWeaklyIncreasing <- function(x) {
+  all(diff(x) >= 0)
+}
+
 checkSYTrows <- function(syt){
-  all(sapply(syt, function(x) all(diff(x) > 0)))
+  all(vapply(syt, isStrictlyIncreasing, logical(1L)))
 }
 
 checkSSYTrows <- function(ssyt){
-  all(sapply(ssyt, function(x) all(diff(x) >= 0)))
+  all(vapply(ssyt, isWeaklyIncreasing, logical(1L)))
 }
 
 checkSYT <- function(syt){
