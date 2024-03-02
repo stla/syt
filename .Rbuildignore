@@ -4,3 +4,4 @@
 ^cran-comments\.md$
 ^inst/ztemp/$
 ^CRAN-RELEASE$
+^CRAN-SUBMISSION$
