@@ -73,6 +73,24 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
   })
 }
 
+#' @title Check whether a tableau is a skew tableau
+#' @description Check whether a tableau is a skew tableau.
+#' 
+#' @param tableau a tableau
+#'
+#' @return A Boolean value.
+#' @export
+#'
+#' @examples
+#' tbl <- list(c(NA, NA, 1, 1), c(NA, 1), c(1, 2))
+#' isSkewTableau(tbl)
+isSkewTableau <- function(tableau) {
+  isTableau(tableau) && all(vapply(tableau, function(row) {
+    nas <- which(is.na(row))
+    length(nas) < length(row) && identical(nas, seq_along(nas))
+  }, logical(1L)))
+}
+
 #' @importFrom Matrix sparseMatrix
 #' @noRd
 .skewTableau2matrix <- function(tableau) {
@@ -101,6 +119,7 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
 #' tbl <- list(c(NA, NA, 1, 1), c(NA, 1), c(1, 2))
 #' prettySkewTableau(tbl)
 prettySkewTableau <- function(skewTableau) {
+  stopifnot(isSkewTableau(skewTableau))
   M <- .skewTableau2matrix(skewTableau)
   ls <- lengths(skewTableau)
   formattedM <- formatSparseM(M)
@@ -114,35 +133,20 @@ prettySkewTableau <- function(skewTableau) {
   noquote(furtherFormattedM)
 }
 
-
-
-
-# dualSkewTableau :: forall a. SkewTableau a -> SkewTableau a
-# dualSkewTableau (SkewTableau axs) = SkewTableau (go axs) where
-# 
-#   go []  = []  
-#   go axs = case sub 0 axs of
-#     (0,[]) -> []
-#     this   -> this : go (strip axs)
-# 
-#   strip :: [(Int,[a])] -> [(Int,[a])]
-#   strip []            = []
-#   strip ((a,xs):rest) = if a>0 
-#     then (a-1,xs) : strip rest
-#     else case xs of
-#       []     -> []
-#       (z:zs) -> case zs of
-#         []      -> []
-#         _       -> (0,zs) : strip rest
-# 
-#   sub :: Int -> [(Int,[a])] -> (Int,[a])
-#   sub !b [] = (b,[])
-#   sub !b ((a,this):rest) = if a>0 
-#     then sub (b+1) rest  
-#     else (b,ys) where      
-#       ys = map head $ takeWhile (not . null) (this : map snd rest)
-
+#' @title Dual skew tableau
+#' @description Returns the dual (skew) tableau of a skew tableau.
+#'
+#' @param skewTableau a skew tableau
+#'
+#' @return A skew tableau.
+#' @export
+#'
+#' @examples
+#' tbl <- list(c(NA, NA, 1, 1), c(NA, 1), c(1, 2))
+#' dtbl <- dualSkewTableau(tbl)
+#' prettySkewTableau(dtbl)
 dualSkewTableau <- function(skewTableau) {
+  stopifnot(isSkewTableau(skewTableau))
   sub <- function(b, sktbl) {
     if(length(sktbl) == 0L) {
       list(b, integer(0L))
