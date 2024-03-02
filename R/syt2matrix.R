@@ -1,8 +1,33 @@
-.syt2matrix <- function(syt){
-  Matrix::sparseMatrix(i = rep(seq_along(syt), times=lengths(syt)),
-                       j = unlist(sapply(lengths(syt), seq_len)),
-                       x = as.integer(unlist(syt)))
+.tableau2matrix <- function(tableau){
+  Matrix::sparseMatrix(i = rep(seq_along(tableau), times = lengths(tableau)),
+                       j = unlist(sapply(lengths(tableau), seq_len)),
+                       x = unlist(tableau))
 }
+
+#' Tableau as sparse matrix
+#' @description Representation of a tableau as a sparse matrix; only for a 
+#'   tableau with numeric or logical entries.
+#'
+#' @param tableau a tableau with numeric or logical entries
+#'
+#' @return A sparse matrix.
+#' @seealso \code{\link{matrix2tableau}}
+#' @importFrom Matrix sparseMatrix
+#' @export
+#'
+#' @examples
+#' syt <- list(c(1,2,6), c(3,5), 4)
+#' syt2matrix(syt)
+tableau2matrix <- function(tableau){
+  stopifnot(isTableau(tableau))
+  if(!is.element(modeTableau(tableau), c("numeric", "logical"))) {
+    stop(
+      "This function only applies to tableaux with numeric or logical entries."
+    )
+  }
+  .tableau2matrix(tableau)
+}
+
 
 #' Standard Young tableau as sparse matrix
 #' @description Representation of a standard Young tableau as a sparse matrix.
@@ -13,19 +38,22 @@
 #' @seealso \code{\link{matrix2syt}}
 #' @importFrom Matrix sparseMatrix
 #' @export
+#' 
+#' @note This function is the same as \code{\link{tableau2matrix}} except that 
+#'   in addition it checks that the given tableau is a standard Young tableau.
 #'
 #' @examples
 #' syt <- list(c(1,2,6), c(3,5), 4)
 #' syt2matrix(syt)
 syt2matrix <- function(syt){
   checkSYT(syt)
-  .syt2matrix(syt)
+  .tableau2matrix(syt)
 }
 
 
-.matrix2syt <- function(M){
+.matrix2syt <- function(M) {
   sapply(seq_len(nrow(M)),
-         function(i) as.integer(removezeros(M[i,])), simplify = FALSE)
+         function(i) as.integer(removezeros(M[i, ])), simplify = FALSE)
 }
 
 #' Standard Young tableau from a matrix

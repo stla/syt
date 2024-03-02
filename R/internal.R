@@ -21,17 +21,11 @@ checkPartition <- function(x){
 }
 
 checkSYTrows <- function(syt){
-  all(sapply(syt, function(x) all(diff(x)>0)))
+  all(sapply(syt, function(x) all(diff(x) > 0)))
 }
 
-isSYT <- function(syt){
-  contents <- unlist(syt)
-  N <- length(contents)
-  is.list(syt) &&
-    isPartition(lengths(syt)) &&
-    setequal(contents, 1L:N) &&
-    checkSYTrows(syt) &&
-    checkSYTrows(.dualsyt(syt))
+checkSSYTrows <- function(ssyt){
+  all(sapply(ssyt, function(x) all(diff(x) >= 0)))
 }
 
 checkSYT <- function(syt){
