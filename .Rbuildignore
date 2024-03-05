@@ -5,3 +5,4 @@
 ^inst/ztemp/$
 ^CRAN-RELEASE$
 ^CRAN-SUBMISSION$
+^\.github$

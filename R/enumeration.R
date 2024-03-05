@@ -73,7 +73,8 @@ ytbl <- function(N, lambda, a, more){
 #' @export
 #'
 #' @examples
-#' all_sytx(c(5,2))
+#' sytx <- all_sytx(c(5, 2))
+#' lapply(sytx, prettyTableau)
 all_sytx <- function(lambda){
   lambda <- checkPartition(lambda)
   N <- sum(lambda)

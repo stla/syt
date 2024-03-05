@@ -1,10 +1,10 @@
-# `syt`: Standard Young Tableaux
+# `syt`: Young Tableaux
 
-## Installation
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/stla/syt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stla/syt/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
-```
-devtools::install_github("stla/syt")
-```
+___
 
 ## Features
 

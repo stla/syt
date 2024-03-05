@@ -49,7 +49,8 @@ rg <- function(start, end) {
 #' @export
 #'
 #' @examples
-#' all_ssytx(c(2, 1), 3)
+#' ssytx <- all_ssytx(c(2, 1), 3)
+#' lapply(ssytx, prettyTableau)
 all_ssytx <- function(lambda, n) {
   lambda <- as.integer(checkPartition(lambda))
   n <- as.integer(n)

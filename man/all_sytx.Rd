@@ -16,5 +16,6 @@ A list of standard Young tableaux.
 Generates all standard Young tableaux of a given shape.
 }
 \examples{
-all_sytx(c(5,2))
+sytx <- all_sytx(c(5, 2))
+lapply(sytx, prettyTableau)
 }

@@ -21,5 +21,6 @@ Generates all semistandard Young tableaux of a given shape and
   filled with integers between \code{1} and a given \code{n}.
 }
 \examples{
-all_ssytx(c(2, 1), 3)
+ssytx <- all_ssytx(c(2, 1), 3)
+lapply(ssytx, prettyTableau)
 }
