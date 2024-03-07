@@ -11,7 +11,6 @@
 #' @param tableau a tableau with numeric or logical entries
 #'
 #' @return A sparse matrix.
-#' @seealso \code{\link{matrix2tableau}}
 #' @importFrom Matrix sparseMatrix
 #' @export
 #'

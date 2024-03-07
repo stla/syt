@@ -20,6 +20,3 @@ Representation of a tableau as a sparse matrix; only for a
 syt <- list(c(1,2,6), c(3,5), 4)
 syt2matrix(syt)
 }
-\seealso{
-\code{\link{matrix2tableau}}
-}
