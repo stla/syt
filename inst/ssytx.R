@@ -38,7 +38,7 @@ ssytxx <- function(lambda, n) {
       }))
     }
   }
-  worker(rep(0L, 4L), lambda)
+  worker(rep(0L, lambda[1L]), lambda)
 }
 
-ssytxx(c(2,2,1), 3)
+ssytxx(c(2,2,1), 4) |> length()

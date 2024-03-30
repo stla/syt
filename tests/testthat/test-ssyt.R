@@ -6,6 +6,11 @@ test_that("count_ssytx", {
 test_that("all_ssytx", {
   ssytx <- all_ssytx(c(2, 1), 3)
   expect_length(ssytx, 8L)
+  #
+  lambda <- c(2, 2, 1)
+  n <- 4
+  ssytx <- all_ssytx(lambda, n)
+  expect_length(ssytx, count_ssytx(lambda, n))
 })
 
 test_that("isSSYT", {
