@@ -4,6 +4,8 @@
 
 * New functions for skew tableaux.
 
+* There was a bug in the function `all_ssytx`.
+
 
 # syt 0.3.0
 

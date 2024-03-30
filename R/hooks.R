@@ -68,6 +68,6 @@ count_sytx <- function(lambda){
       numterms <- c(numterms,i)
     }
   }
-  prod(numterms)/prod(denterms)
+  prod(numterms) %/% prod(denterms)
 }
 

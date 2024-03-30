@@ -29,7 +29,7 @@ count_ssytx <- function(lambda, n) {
       out <- out * (1 + (lambda[i] - lambda[j]) / (j - i)) 
     }
   }
-  out
+  as.integer(out)
 }
 
 rg <- function(start, end) {
