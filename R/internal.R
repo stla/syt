@@ -22,7 +22,7 @@ isPartition <- function(x){
 
 checkPartition <- function(x){
   if(isPartition(x)){
-    return(removezeros(x))
+    return(as.integer(removezeros(x)))
   }else{
     stop("`lambda` is not a partition.", call. = FALSE)
   }
@@ -50,4 +50,9 @@ checkSYT <- function(syt){
   }else{
     return(invisible())
   }
+}
+
+.rg <- function(start, end) {
+  #seq_len(end - start + 1L) + (start - 1L)
+  if(start <= end) start:end else integer(0L)
 }

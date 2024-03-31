@@ -17,10 +17,10 @@ count_ssytx <- function(lambda, n) {
   n <- as.integer(n)
   stopifnot(n >= 1L)
   if(n < length(lambda)) {
-    return(0)
+    return(0L)
   }
   if(n == 1L) {
-    return(1)
+    return(1L)
   }
   lambda <- c(lambda, rep(0, n-length(lambda)))
   out <- 1
@@ -29,11 +29,7 @@ count_ssytx <- function(lambda, n) {
       out <- out * (1 + (lambda[i] - lambda[j]) / (j - i)) 
     }
   }
-  as.integer(out)
-}
-
-rg <- function(start, end) {
-  seq_len(end - start + 1L) + (start - 1L)
+  as.integer(ceiling(out))
 }
 
 #' Enumeration of semistandard Young tableaux
@@ -52,13 +48,14 @@ rg <- function(start, end) {
 #' ssytx <- all_ssytx(c(2, 1), 3)
 #' lapply(ssytx, prettyTableau)
 all_ssytx <- function(lambda, n) {
+  lambda <- checkPartition(lambda)
   row <- function(n, len, prev, xxs) {
     if(len == 0L) {
       list(integer(0L))
     } else {
       x <- xxs[[1L]]
       xs <- xxs[-1L]
-      do.call(c, lapply(rg(max(x, prev), n), function(a) {
+      do.call(c, lapply(.rg(max(x, prev), n), function(a) {
         lapply(row(n, len - 1L, a, xs), function(as) {
           c(a, as)
         })
