@@ -4,6 +4,8 @@
 
 * New functions for skew tableaux.
 
+* Kostka numbers.
+
 * There was a bug in the function `all_ssytx`.
 
 
