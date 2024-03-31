@@ -30,7 +30,7 @@ KostkaNumber <- function(lambda, mu) {
   if(wlam == 0L) {
     return(as.integer(wmu == 0L))
   }
-  if(wmu != wlam || !jack:::isDominated(mu, lambda)) {
+  if(wmu != wlam) { #|| !jack:::isDominated(mu, lambda)) {
     return(0L)
   }
   nlam <- length(lambda)
