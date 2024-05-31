@@ -67,7 +67,7 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
   }
   as <- c(as.integer(mu), rep(0L, length(lambda) - length(mu)))
   bs <- as.integer(lambda) - as
-  if(any(bs) < 0L) {
+  if(any(bs < 0L)) {
     stop("The partition `mu` is not a subpartition of the partition `lambda`.")
   }
   ds <- diffSequence(as)
