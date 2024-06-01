@@ -135,12 +135,12 @@ GTpatternToTableau <- function(pattern) {
   l <- length(pattern)
   diagonals <- lapply(seq_len(l), function(j) {
     removezeros(vapply(seq_len(j), function(i) {
-      pattern[[l-i+1L]][i]
+      pattern[[l-j+i]][i]
     }, integer(1L)))
   })
   lambda <- diagonals[[l]]
   ellLambda <- length(lambda)
-  startingTableau <- replicate(m, integer(0L), simplify = FALSE)
+  startingTableau <- replicate(ellLambda, integer(0L), simplify = FALSE)
   go <- function(i, tableau) {
     if(i == 0L) {
       go(
@@ -165,6 +165,8 @@ GTpatternToTableau <- function(pattern) {
   go(0L, startingTableau)
 }
 
+gt <- list(c(5),c(5,4),c(3,3,2),c(3,3,2,1),c(3,3,2,1,1),c(3,2,1,1,0,0))
+gt <- lapply(gt, as.integer)
 # gtPatternToTableau pattern = 
 #   if l >= 0 
 #     then DF.toList $ go 0 startingTableau
