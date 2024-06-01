@@ -213,6 +213,3 @@ prettyGT <- function(GT) {
   }
   go(0L, startingTableau)
 }
-
-gt <- list(c(5),c(5,4),c(3,3,2),c(3,3,2,1),c(3,3,2,1,1),c(3,2,1,1,0,0))
-gt <- lapply(gt, as.integer)
