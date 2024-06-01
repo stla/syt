@@ -120,6 +120,8 @@
 #' @export
 #'
 #' @examples
+#' GTpatterns <- GelfandTsetlinPatterns(c(3, 1), c(1, 1, 1, 1))
+#' lapply(GTpatterns, prettyGT)
 GelfandTsetlinPatterns <- function(lambda, delta) {
   stopifnot(isPartition(lambda))
   stopifnot(isIntegerVector(delta))
