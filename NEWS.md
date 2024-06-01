@@ -1,3 +1,12 @@
+# syt 0.5.0
+
+* New function `GelfandTsetlinPatterns`, to enumerate the Gelfand-Tsetlin 
+patterns with a given top diagonal and with given diagonal sums.
+
+* New function `ssytx_withGivenShapeAndWeight`, to enumerate the semistandard 
+Young tableaux with a given shape and a given weight.
+
+
 # syt 0.4.0
 
 * New functions for general tableaux.
