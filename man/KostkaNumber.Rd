@@ -23,7 +23,7 @@ The Kostka number \eqn{K(\lambda,\mu)} is the number of semistandard
   Young tableaux with shape \eqn{\lambda} and weight \eqn{\mu}. It does 
   not depend on the order of the elements of \eqn{\mu} (so one can always 
   take an integer partition for \eqn{\mu}). The \emph{weight} is the 
-  vector whose \eqn{i}-th element is the number of occurences of \eqn{i} 
+  vector whose \eqn{i}-th element is the number of occurrences of \eqn{i} 
   in the tableau.
 }
 \examples{

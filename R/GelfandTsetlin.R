@@ -17,6 +17,8 @@
 }
 
 # lambda is clean
+#' @importFrom utils head tail
+#' @noRd
 .GelfandTsetlinPatterns <- function(lambda, mu0) {
   if(any(mu0 < 0L)) {
     return(list())
@@ -185,11 +187,11 @@ prettyGT <- function(GT) {
     return(list())
   }
   diagonals <- lapply(seq_len(l), function(j) {
-    removezeros(vapply(seq_len(j), function(i) {
+    vapply(seq_len(j), function(i) {
       pattern[[l-j+i]][i]
-    }, integer(1L)))
+    }, integer(1L))
   })
-  lambda <- diagonals[[l]]
+  lambda <- removezeros(diagonals[[l]])
   ellLambda <- length(lambda)
   startingTableau <- replicate(ellLambda, integer(0L), simplify = FALSE)
   go <- function(i, tableau) {
@@ -207,7 +209,12 @@ prettyGT <- function(GT) {
     } else if(i < l) {
       go(
         i + 1L,
-        .growTableau(i + 1L, tableau, diagonals[[i+1L]], diagonals[[i]])
+        .growTableau(
+          i + 1L, 
+          tableau, 
+          removezeros(diagonals[[i+1L]]), 
+          removezeros(diagonals[[i]])
+        )
       )
     } else {
       tableau
