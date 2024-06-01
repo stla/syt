@@ -27,11 +27,11 @@ findGTpatterns <- function(l, mu, w) {
     rparts(n-k, ell, m)
   })
   Grid <- as.matrix(expand.grid(lapply(lengths(restrParts), seq_len)))
-  paths <- apply(Grid, 1L, function(combo) {
-    lapply(seq_len(combo), function(i) {
-      restrParts[[i]][[combo[i]]]
-    })
-  }, simplify = FALSE)
+  # paths <- apply(Grid, 1L, function(combo) {
+  #   lapply(seq_len(combo), function(i) {
+  #     restrParts[[i]][[combo[i]]]
+  #   })
+  # }, simplify = FALSE)
   # Grid <- cbind(1L, Grid, 1L)
   pairs <- cbind(
     head(seq_len(2L + ncol(Grid)), -1L), 
@@ -40,7 +40,7 @@ findGTpatterns <- function(l, mu, w) {
   cfs <- apply(Grid, 1L, function(combo) {
     path <- c(
       list(l),
-      lapply(seq_len(combo), function(i) {
+      lapply(seq_along(combo), function(i) {
         restrParts[[i]][[combo[i]]]
       }),
       list(mu)
@@ -49,6 +49,7 @@ findGTpatterns <- function(l, mu, w) {
       path[ij]
     }, simplify = FALSE)
   }, simplify = FALSE)
+  cfs <- unlist(cfs, recursive = FALSE)
   # ip <- lapply(paths, function(path) {
   #   c(list(l), path, list(mu))
   # })
@@ -70,13 +71,13 @@ findGTpatterns <- function(l, mu, w) {
       min(head(cf[[2]], -1L) - tail(cf[[1]], -1L)) >=0
   }
   trues <- which(vapply(cfs, condition, logical(1L)))
-  edgeList <- unique(do.call(rbind, lapply(cfs[trues], function(cf) {
+  edgeList <- do.call(rbind, lapply(cfs[trues], function(cf) {
     c(
       paste0(as.character(cf[[1L]]), collapse = "-"),
       paste0(as.character(cf[[2L]]), collapse = "-")
     )
     #cbind(as.character(cf[[1L]]), as.character(cf[[2L]]))
-  })))
+  }))
   print(vapply(cfs[trues], function(cf) as.integer(sum(cf[[1]]-cf[[2]])), integer(1)))
   print(head(edgeList, 20L))
   gr <- graph_from_edgelist(edgeList)
@@ -85,7 +86,7 @@ findGTpatterns <- function(l, mu, w) {
     gr, 
     from = paste0(as.character(l), collapse = "-"), 
     to = paste0(as.character(mu), collapse = "-"), 
-    mode = "total"
+    mode = "out"
   )
 }
 
