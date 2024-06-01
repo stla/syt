@@ -12,29 +12,37 @@
   dominated
 }
 
-# lambda and mu are clean
-.GelfandTsetlinPatterns <- function(lambda, mu) {
+.mkPartition <- function(mu0) {
+  removezeros(sort(mu0, decreasing = TRUE))
+}
+
+# lambda is clean
+.GelfandTsetlinPatterns <- function(lambda, mu0) {
+  if(any(mu0 < 0L)) {
+    return(list())
+  }
   ellLambda <- length(lambda)
-  ellMu <- length(mu)
+  wMu <- sum(mu0)
   if(ellLambda == 0L) {
-    if(ellMu == 0L) {
+    if(wMu == 0L) {
       return(list(list()))
     } else {
       return(list())
     }
   }
   wLambda <- sum(lambda)
-  wMu <- sum(mu)
-  if(wMu != wLambda || !.isDominatedBy(mu, lambda)) {
+  if(wMu != wLambda || !.isDominatedBy(.mkPartition(mu0), lambda)) {
     return(list())
   }
+  ellMu <- length(mu0)
   n <- max(ellLambda, ellMu)
   if(ellLambda != n) {
     lambda <- c(lambda, rep(0L, n - ellLambda))
   } else if(ellMu != n) {
-    mu <- c(mu, rep(0L, n - ellMu))
+    mu0 <- c(mu0, rep(0L, n - ellMu))
   } 
   revLambda <- rev(lambda)
+  partialSumsMu0 <- cumsum(mu0)
   worker <- function(
       rl_rls,
       smu_smus,
@@ -93,7 +101,7 @@
       list(integer(0L))
     }
   }
-  worker(revLambda, cumsum(mu), rep(0L, n-1L), rep(0L, n), list())
+  worker(revLambda, partialSumsMu0, rep(0L, n-1L), rep(0L, n), list())
 }
 
 .skewPartitionRows <- function(lambda, mu) {
