@@ -1,5 +1,5 @@
 # lambda and mu are clean
-isDominatedBy <- function(mu, lambda) {
+.isDominatedBy <- function(mu, lambda) {
   n <- sum(lambda)
   lambda <- c(lambda, rep(0L, n - length(lambda)))
   dominated <- TRUE
@@ -25,7 +25,7 @@ isDominatedBy <- function(mu, lambda) {
   }
   wLambda <- sum(lambda)
   wMu <- sum(mu)
-  if(wMu != wLambda || !isDominatedBy(mu, lambda)) {
+  if(wMu != wLambda || !.isDominatedBy(mu, lambda)) {
     return(list())
   }
   n <- max(ellLambda, ellMu)
@@ -96,11 +96,11 @@ isDominatedBy <- function(mu, lambda) {
   worker(revLambda, cumsum(mu), rep(0L, n-1L), rep(0L, n), list())
 }
 
-skewPartitionRows <- function(lambda, mu) {
+.skewPartitionRows <- function(lambda, mu) {
   ellLambda <- length(lambda)
   ellMu <- length(mu)
   mu <- c(mu, rep(0L, ellLambda - ellMu))
-  unlist(lapply(seq_len(ellLambda), function(i) {
+  do.call(c, lapply(seq_len(ellLambda), function(i) {
     rep(i, lambda[i] - mu[i])
   }))  
 }
@@ -128,11 +128,16 @@ skewPartitionRows <- function(lambda, mu) {
       tbl
     )
   }
-  Reduce(f, as.list(skewPartitionRows(lambda, mu)), init = tableau, simplify = FALSE)
+  Reduce(
+    f, as.list(.skewPartitionRows(lambda, mu)), init = tableau, simplify = FALSE
+  )
 }
 
-GTpatternToTableau <- function(pattern) {
+.GTpatternToTableau <- function(pattern) {
   l <- length(pattern)
+  if(l == 0L) {
+    return(list())
+  }
   diagonals <- lapply(seq_len(l), function(j) {
     removezeros(vapply(seq_len(j), function(i) {
       pattern[[l-j+i]][i]
@@ -167,25 +172,3 @@ GTpatternToTableau <- function(pattern) {
 
 gt <- list(c(5),c(5,4),c(3,3,2),c(3,3,2,1),c(3,3,2,1,1),c(3,2,1,1,0,0))
 gt <- lapply(gt, as.integer)
-# gtPatternToTableau pattern = 
-#   if l >= 0 
-#     then DF.toList $ go 0 startingTableau
-#     else [S.singleton 1]
-#   where
-#     (corner, diagonals) = gtPatternDiagonals pattern
-#     diagonals' = toPartitionUnsafe [corner] : diagonals
-#     l = length diagonals - 1
-#     lambda = diagonals !! l
-#     m = partitionWidth lambda
-#     startingTableau = S.replicate m S.Empty
-#     zippedDiagonals = zip diagonals diagonals'
-#     skewPartition i = mkSkewPartition (zippedDiagonals !! i)
-#     go i tableau
-#       | i == 0 = go 1 (S.adjust' (flip (><) (S.replicate corner 1)) 0 tableau)
-#       | i == l+2 = tableau
-#       | otherwise = 
-#           go (i+1) (growTableau (i+1) tableau (skewPartition (i-1)))
-#     growTableau :: Int -> Seq (Seq Int) -> SkewPartition -> Seq (Seq Int)
-#     growTableau j tableau skewPart =
-#       DF.foldr (\(i, _) -> S.adjust' (flip (|>) j) (i-1)) tableau 
-#                 (skewPartitionElements skewPart)
