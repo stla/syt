@@ -1,27 +1,3 @@
-library(partitions)
-library(igraph)
-
-partitionsFittingRectangle <- function(h, w, d) {
-  if(d == 0L) {
-    return(list(integer(0L)))
-  }
-  if(h == 0L || w == 0L) {
-    if(d == 0L) {
-      return(list(integer(0L)))
-    } else {
-      return(list())
-    }
-  }
-  do.call(
-    c,
-    lapply(1L:min(d, h), function(i) {
-      lapply(partitionsFittingRectangle(i, w-1L, d-i), function(p) {
-        c(i, p)
-      })
-    })
-  )
-}
-
 .partitionsFittingRectangleWithZeros <- function(h, w, d) {
   if(d == 0L) {
     return(list(rep(0L, w)))
@@ -50,9 +26,34 @@ partitionsFittingRectangle <- function(h, w, d) {
   }, simplify = FALSE)
 }
 
+#' @title Gelfand-Tsetlin patterns of a skew partition
+#' @description Enumeration of Gelfand-Tsetlin patterns associated to a 
+#'   given skew partition and a given weight.
+#' 
+#' @param lambda,mu integer partitions defining the skew partition: 
+#'   \code{lambda} is the outer partition and \code{mu} is the inner partition 
+#'   (so \code{mu} must be a subpartition of \code{lambda}); \code{lambda}
+#'   will be the last row of the generated Gelfand-Tsetlin patterns and 
+#'   \code{mu} will be their first row
+#' @param weight integer vector; this vector will be the 
+#'   differences of the row sums of the generated Gelfand-Tsetlin patterns; 
+#'   consequently, there will be no generated Gelfand-Tsetlin pattern unless 
+#'   the sum of \code{weight} equals the difference between the sum of 
+#'   \code{lambda} and the sum of \code{mu}
+#'
+#' @return A list of matrices with non-negative integer entries. The number 
+#'   of columns of these matrices is the length of \code{lambda} and the 
+#'   number of rows of these matrices is one plus the length of \code{weight}.
+#' @export
 #' @importFrom igraph graph_from_edgelist V all_simple_paths
-# lambda and mu are clean partitions
-findGTpatterns2 <- function(lambda, mu, w) {
+#'
+#' @examples
+#' skewGelfandTsetlinPatterns(c(3, 1, 1), c(2), c(1, 1, 1))
+skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
+  stopifnot(isPartition(lambda), isPartition(mu))
+  stopifnot(isIntegerVector(weight))
+  lambda <- as.integer(removezeros(lambda))
+  mu <- as.integer(removezeros(mu))
   ellLambda <- length(lambda)
   ellMu <- length(mu)
   if(ellLambda < ellMu) {
@@ -62,17 +63,20 @@ findGTpatterns2 <- function(lambda, mu, w) {
   if(any(lambda < mu)) {
     stop("The partition `mu` is not a subpartition of the partition `lambda`.")
   }
-  wLambda <- sum(lambda)
-  if(sum(w) != wLambda - sum(mu)) {
+  if(any(weight < 0L)) {
     return(list())
   }
-  rw <- rev(w)
-  # in case w contains some zeros - this will be used at the end
-  lines <- cumsum(pmin(1L, c(1L, rw)))
+  wLambda <- sum(lambda)
+  if(sum(weight) != wLambda - sum(mu)) {
+    return(list())
+  }
+  rweight <- rev(weight)
+  # in case weight contains some zeros - this will be used at the end
+  lines <- reverse(cumsum(pmin(1L, c(1L, rweight))))
   #
-  rw <- rw[rw != 0L]
+  rweight <- rweight[rweight != 0L]
   m <- lambda[1L]
-  listsOfPartitions <- lapply(head(cumsum(rw), -1L), function(k) {
+  listsOfPartitions <- lapply(head(cumsum(rweight), -1L), function(k) {
     .partitionsFittingRectangleWithZeros(m, ellLambda, wLambda - k)
   })
   listsOfPartitions <- c(
@@ -119,11 +123,3 @@ findGTpatterns2 <- function(lambda, mu, w) {
     vertices[path, ][lines, ]
   })
 }
-
-lambda <- c(4, 3, 3, 2, 1, 1)
-mu <- c(2, 2, 1)
-w <- c(0, 3, 3, 2, 1)
-
-gts <- findGTpatterns2(lambda, mu, w)
-gts
-#str(gts[[1]])

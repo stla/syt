@@ -176,7 +176,7 @@ prettyGT <- function(GT) {
     )
   }
   Reduce(
-    f, as.list(.skewPartitionRows(lambda, mu)), init = tableau, simplify = FALSE
+    f, as.list(.skewPartitionRows(lambda, mu)), init = tableau
   )
 }
 

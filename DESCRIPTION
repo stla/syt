@@ -15,6 +15,7 @@ License: GPL-3
 URL: https://github.com/stla/syt
 BugReports: https://github.com/stla/syt/issues
 Imports: 
+    igraph,
     Matrix,
     partitions,
     utils

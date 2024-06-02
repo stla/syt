@@ -60,3 +60,8 @@ checkSYT <- function(syt){
   #seq_len(end - start + 1L) + (start - 1L)
   if(start <= end) start:end else integer(0L)
 }
+
+# the converse of toString
+fromString <- function(string) {
+  as.integer(strsplit(string, ",", fixed = TRUE)[[1L]])
+}
