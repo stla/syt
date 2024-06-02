@@ -51,7 +51,7 @@
 #' skewGelfandTsetlinPatterns(c(3, 1, 1), c(2), c(1, 1, 1))
 skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   stopifnot(isPartition(lambda), isPartition(mu))
-  stopifnot(isIntegerVector(weight))
+  stopifnot(isIntegerVector(weight), length(weight) >= 1L)
   lambda <- as.integer(removezeros(lambda))
   mu <- as.integer(removezeros(mu))
   ellLambda <- length(lambda)
@@ -69,6 +69,11 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   wLambda <- sum(lambda)
   if(sum(weight) != wLambda - sum(mu)) {
     return(list())
+  }
+  if(all(lambda == mu)) {
+    return(
+      list(rbind(lambda, lambda))
+    )
   }
   rweight <- rev(weight)
   # in case weight contains some zeros - this will be used at the end
@@ -100,6 +105,9 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
     }, 
     potentialEdges
   )
+  if(length(edges) == 0L) {
+    return(list())
+  }
   edgeList <- do.call(rbind, lapply(edges, function(edge) {
     c(
       toString(edge[[1L]]),
@@ -107,12 +115,12 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
     )
   }))
   gr <- graph_from_edgelist(edgeList)
-  vertices <- t(vapply(
+  vertices <- t(rbind(vapply(
     names(V(gr)), 
-    qspray:::fromString, 
+    fromString, 
     integer(ellLambda),
     USE.NAMES = FALSE)
-  )
+  ))
   paths <- all_simple_paths(
     gr, 
     from = toString(lambda), 
@@ -120,6 +128,6 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
     mode = "out"
   )
   lapply(paths, function(path) {
-    vertices[path, ][lines, ]
+    vertices[path, , drop = FALSE][lines, , drop = FALSE]
   })
 }
