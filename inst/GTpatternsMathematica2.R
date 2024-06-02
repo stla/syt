@@ -122,7 +122,7 @@ findGTpatterns2 <- function(lambda, mu, w) {
 
 lambda <- c(4, 3, 3, 2, 1, 1)
 mu <- c(2, 2, 1)
-w <- c(0, 3, 3, 2, 1)
+w <- c(3, 3, 2, 1)
 
 gts <- findGTpatterns2(lambda, mu, w)
 gts
