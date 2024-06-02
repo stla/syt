@@ -34,3 +34,15 @@ test_that("Number of GT patterns is Kostka number", {
   }) 
   expect_true(all(Knumbers == counts))
 })
+
+test_that("Number of skew GT patterns", {
+  lambda <- c(4, 2, 1); mu <- c(2, 1); n <- 5
+  nskewTableaux <- length(all_ssSkewTableaux(lambda, mu, n))
+  compos <- partitions::compositions(sum(lambda)-sum(mu), n)
+  skewGTpatterns <- apply(compos, 2L, function(w) {
+    skewGelfandTsetlinPatterns(lambda, mu, w)
+  }, simplify = FALSE)
+  expect_true(
+    nskewTableaux == sum(lengths(skewGTpatterns))
+  )
+})

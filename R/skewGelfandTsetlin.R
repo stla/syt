@@ -72,7 +72,7 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   }
   rweight <- rev(weight)
   # in case weight contains some zeros - this will be used at the end
-  lines <- reverse(cumsum(pmin(1L, c(1L, rweight))))
+  lines <- rev(cumsum(pmin(1L, c(1L, rweight))))
   #
   rweight <- rweight[rweight != 0L]
   m <- lambda[1L]
