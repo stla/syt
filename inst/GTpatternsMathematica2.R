@@ -1,13 +1,6 @@
-# -- | Integer partitions of @d@, fitting into a given rectangle, as lists.
-# _partitions' 
-#   :: (Int,Int)     -- ^ (height,width)
-#   -> Int           -- ^ d
-#   -> [[Int]]        
-# _partitions' _ 0 = [[]] 
-# _partitions' ( 0 , _) d = if d==0 then [[]] else []
-# _partitions' ( _ , 0) d = if d==0 then [[]] else []
-# _partitions' (!h ,!w) d = 
-#   [ i:xs | i <- [1..min d h] , xs <- _partitions' (i,w-1) (d-i) ]
+library(partitions)
+library(igraph)
+
 partitionsFittingRectangle <- function(h, w, d) {
   if(d == 0L) {
     return(list(integer(0L)))
@@ -29,58 +22,74 @@ partitionsFittingRectangle <- function(h, w, d) {
   )
 }
 
-# findGTPatternsN[l_, mu_, w_] := Module[{w1, ip, cf, g},
-#   w1 = Accumulate@Reverse@w; 
-#   ip = Join[{{l}},  IntegerPartitions[Tr@l - #, {Length@l}, Range[0, Max@l]] & /@ 
-#                                                                 Most@w1, {{mu}}];
-#   cf = Flatten[Tuples[{ip[[#]], ip[[# + 1]]}] & /@ (Range[Length[ip] - 1]), 1];
-#   g = Graph[ DirectedEdge @@@ (If[ Min [#[[1]] - #[[2]]] >= 0 && 
-#                                   Min[#[[2, ;; -2]] - #[[1, 2 ;;]]] >= 0, 
-#                                   ##, 
-#                                   Sequence @@ {}] & /@ cf)];
-#   findPaths[g, l, mu]
-#   ]
-library(partitions)
-library(igraph)
-rparts <- function(n, ell, m) {
-  Filter(
-    function(mu) all(mu <= m), 
-    apply(restrictedparts(n, ell, include.zero = TRUE), 2L, identity, simplify = FALSE)
+partitionsFittingRectangleWithZeros <- function(h, w, d) {
+  if(d == 0L) {
+    return(list(rep(0L, w)))
+  }
+  if(h == 0L || w == 0L) {
+    if(d == 0L) {
+      return(list(rep(0L, w)))
+    } else {
+      return(list())
+    }
+  }
+  do.call(
+    c,
+    lapply(1L:min(d, h), function(i) {
+      lapply(partitionsFittingRectangleWithZeros(i, w-1L, d-i), function(p) {
+        c(i, p)
+      })
+    })
   )
 }
-findGTpatterns <- function(l, mu, w) {
+
+findGTpatterns2 <- function(l, mu, w) {
   w1 <- cumsum(rev(w))
   most_w1 <- head(w1, -1L)
   n <- sum(l)
   ell <- length(l)
   m <- max(l)
   restrParts <- lapply(most_w1, function(k) {
-    rparts(n-k, ell, m)
+    partitionsFittingRectangleWithZeros(m, ell, n - k)
+    # rparts(n-k, ell, m)
   })
-  Grid <- as.matrix(expand.grid(lapply(lengths(restrParts), seq_len)))
-  # paths <- apply(Grid, 1L, function(combo) {
-  #   lapply(seq_len(combo), function(i) {
-  #     restrParts[[i]][[combo[i]]]
-  #   })
-  # }, simplify = FALSE)
-  # Grid <- cbind(1L, Grid, 1L)
-  pairs <- cbind(
-    head(seq_len(2L + ncol(Grid)), -1L), 
-    tail(seq_len(2L + ncol(Grid)), -1L)
-  )
-  cfs <- apply(Grid, 1L, function(combo) {
-    path <- c(
-      list(l),
-      lapply(seq_along(combo), function(i) {
-        restrParts[[i]][[combo[i]]]
-      }),
-      list(mu)
-    )
-    apply(pairs, 1L, function(ij) {
-      path[ij]
+  partitions <- c(list(list(l)), restrParts, list(list(mu)))
+  Tuples <- function(set1, set2) {
+    Grid <- as.matrix(expand.grid(seq_along(set1), seq_along(set2)))
+    apply(Grid, 1L, function(ij) {
+      list(set1[[ij[1L]]], set2[[ij[2L]]])
     }, simplify = FALSE)
-  }, simplify = FALSE)
-  cfs <- unlist(cfs, recursive = FALSE)
+  }
+  cfs <- do.call(
+    c,
+    lapply(seq_len(length(partitions)-1L), function(i) {
+      Tuples(partitions[[i]], partitions[[i+1L]])
+    })
+  )
+  # Grid <- as.matrix(expand.grid(lapply(lengths(restrParts), seq_len)))
+  # # paths <- apply(Grid, 1L, function(combo) {
+  # #   lapply(seq_len(combo), function(i) {
+  # #     restrParts[[i]][[combo[i]]]
+  # #   })
+  # # }, simplify = FALSE)
+  # # Grid <- cbind(1L, Grid, 1L)
+  # pairs <- cbind(
+  #   head(seq_len(2L + ncol(Grid)), -1L), 
+  #   tail(seq_len(2L + ncol(Grid)), -1L)
+  # )
+  # cfs <- apply(Grid, 1L, function(combo) {
+  #   path <- c(
+  #     list(l),
+  #     lapply(seq_along(combo), function(i) {
+  #       restrParts[[i]][[combo[i]]]
+  #     }),
+  #     list(mu)
+  #   )
+  #   apply(pairs, 1L, function(ij) {
+  #     path[ij]
+  #   }, simplify = FALSE)
+  # }, simplify = FALSE)
+  # cfs <- unlist(cfs, recursive = FALSE)
   # ip <- lapply(paths, function(path) {
   #   c(list(l), path, list(mu))
   # })
@@ -125,9 +134,4 @@ l <- c(4, 3, 3, 2, 1, 1, 0, 0)
 mu <- c(2, 2, 1, 0, 0, 0, 0, 0)
 w <- c(3, 3, 2, 1)
 
-findGTpatterns(l, mu, w)
-# #   cf = Flatten[Tuples[{ip[[#]], ip[[# + 1]]}] & /@ (Range[Length[ip] - 1]), 1];
-# #   g = Graph[ DirectedEdge @@@ (If[ Min [#[[1]] - #[[2]]] >= 0 && 
-# #                                   Min[#[[2, ;; -2]] - #[[1, 2 ;;]]] >= 0, 
-# #                                   ##, 
-# #                                   Sequence @@ {}] & /@ cf)];
+findGTpatterns2(l, mu, w)
