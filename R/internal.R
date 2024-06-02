@@ -65,3 +65,7 @@ checkSYT <- function(syt){
 fromString <- function(string) {
   as.integer(strsplit(string, ",", fixed = TRUE)[[1L]])
 }
+
+partitionAsString <- function(lambda) {
+  sprintf("[%s]", toString(lambda))
+}
