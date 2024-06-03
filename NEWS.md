@@ -12,6 +12,9 @@ patterns defined by a given skew integer partition and a given weight.
 * New function `skewTableauxWithGivenShapeAndWeight`, to enumerate the skew
 semistandard Young tableaux with a given shape and a given weight.
 
+* New function `skewKostkaNumbers`, to get the Kostka numbers associated to a
+given skew partition.
+
 
 # syt 0.4.0
 

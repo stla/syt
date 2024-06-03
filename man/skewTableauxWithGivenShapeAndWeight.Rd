@@ -25,6 +25,6 @@ Enumeration of all skew semistandard tableaux with a given
   in this tableau.
 }
 \examples{
-ssstx <- skewTableauxithGivenShapeAndWeight(c(3, 1, 1), c(2), c(1, 1, 1))
+ssstx <- skewTableauxWithGivenShapeAndWeight(c(3, 1, 1), c(2), c(1, 1, 1))
 lapply(ssstx, prettySkewTableau)
 }

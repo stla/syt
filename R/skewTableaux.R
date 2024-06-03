@@ -92,7 +92,7 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
 #' @export
 #'
 #' @examples
-#' ssstx <- skewTableauxithGivenShapeAndWeight(c(3, 1, 1), c(2), c(1, 1, 1))
+#' ssstx <- skewTableauxWithGivenShapeAndWeight(c(3, 1, 1), c(2), c(1, 1, 1))
 #' lapply(ssstx, prettySkewTableau)
 skewTableauxWithGivenShapeAndWeight <- function(lambda, mu, weight) {
   skewGTpatterns <- skewGelfandTsetlinPatterns(lambda, mu, weight)
