@@ -75,6 +75,30 @@ all_ssSkewTableaux <- function(lambda, mu, n) {
   lapply(results, mkSkewTableau)
 }
 
+#' @title Skew semistandard tableaux with given shape and weight
+#' @description Enumeration of all skew semistandard tableaux with a given 
+#'   shape and a given weight. The \emph{weight} of a tableau is the 
+#'   vector whose \eqn{i}-th element is the number of occurrences of \eqn{i} 
+#'   in this tableau.
+#' 
+#' @param lambda,mu integer partitions defining the skew partition: 
+#'   \code{lambda} is the outer partition and \code{mu} is the inner partition 
+#'   (so \code{mu} must be a subpartition of \code{lambda})
+#' @param weight integer vector, the weight
+#'
+#' @return List of all skew semistandard tableaux whose shape is the skew 
+#'   partition defined by \code{lambda} and \code{mu} and whose weight is 
+#'   \code{weight}.
+#' @export
+#'
+#' @examples
+#' ssstx <- skewTableauxithGivenShapeAndWeight(c(3, 1, 1), c(2), c(1, 1, 1))
+#' lapply(ssstx, prettySkewTableau)
+skewTableauxWithGivenShapeAndWeight <- function(lambda, mu, weight) {
+  skewGTpatterns <- skewGelfandTsetlinPatterns(lambda, mu, weight)
+  lapply(skewGTpatterns, .skewGTpatternToTableau)
+}
+
 #' @title Check whether a tableau is a skew tableau
 #' @description Check whether a tableau is a skew tableau.
 #' 
