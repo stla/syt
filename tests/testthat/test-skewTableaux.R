@@ -14,3 +14,30 @@ test_that("Standard skew tableaux", {
   standard <- Filter(isStandardSkewTableau, ssstx)
   expect_length(standard, 12L)
 })
+
+test_that("Comparison all_ssSkewTableaux with skewTableauxWithGivenShapeAndWeight", {
+  lambda <- c(4, 2, 1); mu <- c(2, 1); n <- 5
+  ssstx <- all_ssSkewTableaux(lambda, mu, n)
+  ssstxMatrix <- orderedMatrix(do.call(
+    rbind,
+    lapply(ssstx, function(ssst) {
+      Filter(Negate(is.na), do.call(c, ssst))
+    })
+  ))
+  compos <- partitions::compositions(sum(lambda)-sum(mu), n)
+  ssstx2 <- do.call(
+    c, 
+    apply(compos, 2L, function(compo) {
+      skewTableauxWithGivenShapeAndWeight(lambda, mu, compo)
+    }, simplify = FALSE)
+  )
+  ssstxMatrix2 <- orderedMatrix(do.call(
+    rbind,
+    lapply(ssstx2, function(ssst) {
+      Filter(Negate(is.na), do.call(c, ssst))
+    })
+  ))
+  expect_true(
+    all(ssstxMatrix == ssstxMatrix2)
+  )
+})
