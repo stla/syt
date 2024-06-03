@@ -4,13 +4,13 @@
 \alias{GelfandTsetlinPatterns}
 \title{Gelfand-Tsetlin patterns}
 \usage{
-GelfandTsetlinPatterns(lambda, delta)
+GelfandTsetlinPatterns(lambda, weight)
 }
 \arguments{
 \item{lambda}{integer partition; up to trailing zeros, this will be the 
 top diagonal of the generated Gelfand-Tsetlin patterns}
 
-\item{delta}{integer vector; the partial sums of this vector will be the 
+\item{weight}{integer vector; the partial sums of this vector will be the 
 diagonal sums of the generated Gelfand-Tsetlin patterns}
 }
 \value{
@@ -18,10 +18,11 @@ A list of Gelfand-Tsetlin patterns. A Gelfand-Tsetlin pattern is a
   triangular array of non-negative integers, and it is represented by the 
   list of its rows. Hence the first element of this list is an integer, the 
   second element is an integer vector of length two, and so on. The length 
-  of this list is the length of \code{delta}.
+  of this list is the length of \code{weight}.
 }
 \description{
-Enumeration of Gelfand-Tsetlin patterns.
+Enumeration of Gelfand-Tsetlin patterns defined by a given
+  integer partition and a given weight.
 }
 \examples{
 GTpatterns <- GelfandTsetlinPatterns(c(3, 1), c(1, 1, 1, 1))

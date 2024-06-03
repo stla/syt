@@ -1,10 +1,16 @@
 # syt 0.5.0
 
 * New function `GelfandTsetlinPatterns`, to enumerate the Gelfand-Tsetlin 
-patterns with a given top diagonal and with given diagonal sums.
+patterns defined by a given integer partition and a given weight.
 
 * New function `ssytx_withGivenShapeAndWeight`, to enumerate the semistandard 
 Young tableaux with a given shape and a given weight.
+
+* New function `skewGelfandTsetlinPatterns`, to enumerate the Gelfand-Tsetlin 
+patterns defined by a given skew integer partition and a given weight.
+
+* New function `skewTableauxWithGivenShapeAndWeight`, to enumerate the skew
+semistandard Young tableaux with a given shape and a given weight.
 
 
 # syt 0.4.0

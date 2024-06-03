@@ -2,7 +2,7 @@
 % Please edit documentation in R/skewGelfandTsetlin.R
 \name{skewGelfandTsetlinPatterns}
 \alias{skewGelfandTsetlinPatterns}
-\title{Gelfand-Tsetlin patterns of a skew partition}
+\title{Skew Gelfand-Tsetlin patterns}
 \usage{
 skewGelfandTsetlinPatterns(lambda, mu, weight)
 }
@@ -25,7 +25,7 @@ A list of matrices with non-negative integer entries. The number
   number of rows of these matrices is one plus the length of \code{weight}.
 }
 \description{
-Enumeration of Gelfand-Tsetlin patterns associated to a 
+Enumeration of Gelfand-Tsetlin patterns defined by a 
   given skew partition and a given weight.
 }
 \examples{

@@ -26,8 +26,8 @@
   }, simplify = FALSE)
 }
 
-#' @title Gelfand-Tsetlin patterns of a skew partition
-#' @description Enumeration of Gelfand-Tsetlin patterns associated to a 
+#' @title Skew Gelfand-Tsetlin patterns
+#' @description Enumeration of Gelfand-Tsetlin patterns defined by a 
 #'   given skew partition and a given weight.
 #' 
 #' @param lambda,mu integer partitions defining the skew partition: 

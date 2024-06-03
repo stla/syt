@@ -107,27 +107,28 @@
 }
 
 #' @title Gelfand-Tsetlin patterns
-#' @description Enumeration of Gelfand-Tsetlin patterns.
+#' @description Enumeration of Gelfand-Tsetlin patterns defined by a given
+#'   integer partition and a given weight.
 #' 
 #' @param lambda integer partition; up to trailing zeros, this will be the 
 #'   top diagonal of the generated Gelfand-Tsetlin patterns
-#' @param delta integer vector; the partial sums of this vector will be the 
+#' @param weight integer vector; the partial sums of this vector will be the 
 #'   diagonal sums of the generated Gelfand-Tsetlin patterns 
 #'
 #' @return A list of Gelfand-Tsetlin patterns. A Gelfand-Tsetlin pattern is a 
 #'   triangular array of non-negative integers, and it is represented by the 
 #'   list of its rows. Hence the first element of this list is an integer, the 
 #'   second element is an integer vector of length two, and so on. The length 
-#'   of this list is the length of \code{delta}.
+#'   of this list is the length of \code{weight}.
 #' @export
 #'
 #' @examples
 #' GTpatterns <- GelfandTsetlinPatterns(c(3, 1), c(1, 1, 1, 1))
 #' lapply(GTpatterns, prettyGT)
-GelfandTsetlinPatterns <- function(lambda, delta) {
+GelfandTsetlinPatterns <- function(lambda, weight) {
   stopifnot(isPartition(lambda))
-  stopifnot(isIntegerVector(delta))
-  .GelfandTsetlinPatterns(as.integer(removezeros(lambda)), as.integer(delta))
+  stopifnot(isIntegerVector(weight))
+  .GelfandTsetlinPatterns(as.integer(removezeros(lambda)), as.integer(weight))
 }
 
 #' @title Pretty Gelfand-Tsetlin pattern
