@@ -1,7 +1,15 @@
 #' @importFrom utils head
+#' @noRd
 removezeros <- function(x){ # e.g c(3,1,0,0) -> c(3,1)
   i <- match(0L, x)
   if(!is.na(i)) head(x, i-1L) else x
+}
+removeTrailingZeros <- function(x) {
+  n <- length(x)
+  while(x[n] == 0 && n > 0L) {
+    n <- n - 1L
+  }
+  head(x, n)
 }
 
 isPositiveInteger <- function(x) {
@@ -68,4 +76,9 @@ fromString <- function(string) {
 
 partitionAsString <- function(lambda) {
   sprintf("[%s]", toString(lambda))
+}
+
+fromPartitionAsString <- function(string) {
+  string <- gsub("(\\[|\\])", "", string)
+  as.integer(strsplit(string, ",", fixed = TRUE)[[1L]])
 }
