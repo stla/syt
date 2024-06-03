@@ -46,3 +46,20 @@ test_that("Number of skew GT patterns", {
     nskewTableaux == sum(lengths(skewGTpatterns))
   )
 })
+
+test_that("Number of skew GT patterns is skew Kostka number", {
+  lambda <- c(4, 2, 2); mu <- c(2, 1)
+  partitions <- partitions::parts(sum(lambda) - sum(mu))
+  nus <- 
+    apply(partitions, 2L, removezeros, simplify = FALSE)
+  names(nus) <- vapply(nus, partitionAsString, character(1L))
+  nskewGTpatterns <- vapply(nus, function(nu) {
+    length(skewGelfandTsetlinPatterns(lambda, mu, nu))
+  }, integer(1L))
+  skewKnumbers <- skewKostkaNumbers(lambda, mu)
+  expect_true(
+    all(skewKnumbers == nskewGTpatterns[names(skewKnumbers)])
+  )
+  others <- setdiff(names(nus), names(skewKnumbers))
+  expect_true(all(nskewGTpatterns[others] == 0L))
+})
