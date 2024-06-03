@@ -131,3 +131,20 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
     vertices[path, , drop = FALSE][lines, , drop = FALSE]
   })
 }
+
+# convert a skew Gelfand-Tsetlin pattern to a semistandard skew tableau
+.skewGTpatternToTableau <- function(pattern) {
+  if(ncol(pattern) == 0L) {
+    return(list())
+  }
+  mu <- pattern[1L, ]
+  skewTableau <- lapply(mu, function(i) {
+    rep(NA_integer_, i)
+  })
+  partitions <- apply(pattern, 1L, removeTrailingZeros, simplify = FALSE)
+  for(i in 2L:nrow(pattern)) {
+    skewTableau <- 
+      .growTableau(i-1L, skewTableau, partitions[[i]], partitions[[i-1L]])
+  }
+  skewTableau
+}
