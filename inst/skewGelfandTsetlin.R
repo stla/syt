@@ -60,14 +60,11 @@ boundedNonIncrSeqs <- function(h0, a_as, b_bs) {
 sandwichedPartitions <- function(d, h0, a_as, b_bs) {
   laas <- length(a_as)
   lbbs <- length(b_bs)
-  if(d < 0L) {
+  if(d < 0L || d < sum(a_as) || d > sum(b_bs)) {
     list()
   } else if(laas >= 1L && lbbs >= 1L) {
-    if(d < sum(a_as) || d > sum(b_bs)) {
-      return(list())
-    } 
     if(d == 0L) {
-      return(list(rep(0L, laas)))
+      return(list(rep(0L, lbbs)))
     }
     a <- a_as[1L]
     as <- a_as[-1L]
@@ -90,3 +87,37 @@ sandwichedPartitions <- function(d, h0, a_as, b_bs) {
     }
   }
 }
+
+xxx <- function(lambda, mu, w) {
+  # if(length(w) == 0L) {
+  #   return(list(list(mu)))
+  # }
+  # if(sum(lambda) == sum(mu)) {
+  #   
+  # }
+  d <- sum(lambda) - w[length(w)]
+  if(d == sum(mu)) {
+    mu <- c(mu, rep(0L, length(lambda)-length(mu)))
+    if(all(lambda >= mu) &&
+       all(head(mu, -1L) >= tail(lambda, -1L))
+    ) {
+      return(list(list(lambda,mu)))
+    } else {
+      return(list())
+    }
+  }
+  ps <- sandwichedPartitions(d, lambda[1L], c(tail(lambda, -1L), 0L), lambda)
+  do.call(
+    c,
+    lapply(ps, function(kappa) {
+      lapply(xxx(kappa, mu, head(w, -1)), function(x) {
+        c(x, list(lambda))
+      })
+    })  
+  )
+}
+
+lambda <- c(4L, 3L, 3L, 2L, 1L, 1L)
+mu <- c(2L, 2L, 1L, 0L, 0L, 0L)
+w <- c(3L, 3L, 2L, 1L)
+lapply(xxx(lambda, mu, w), function(x) do.call(rbind, x))

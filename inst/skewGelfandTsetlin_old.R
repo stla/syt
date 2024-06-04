@@ -1,27 +1,30 @@
-# assumes lambda clean and mu has trailing zeros in order that length(lambda)=length(mu)
-sandwichedPartitions <- function(weight, mu, lambda) {
-  # assumes length(a_as) == length(b_bs)
-  recursiveFun <- function(d, h0, a_as, b_bs) {
-    if(d < 0L || d < sum(a_as) || d > sum(b_bs)) {
-      list()
-    } else if(d == 0L) {
-      list(rep(0L, length(a_as)))
+.partitionsFittingRectangleWithZeros <- function(h, w, d) {
+  if(d == 0L) {
+    return(list(rep(0L, w)))
+  }
+  if(h == 0L || w == 0L) {
+    if(d == 0L) {
+      return(list(rep(0L, w)))
     } else {
-      a <- a_as[1L]
-      as <- a_as[-1L]
-      b <- b_bs[1L]
-      bs <- b_bs[-1L]
-      hrange <- syt:::.rg(max(0L, a), min(h0, b))
-      do.call(c, lapply(hrange, function(h) {
-        lapply(recursiveFun(d-h, h, as, bs), function(hs) {
-          c(h, hs)
-        })
-      }))
+      return(list())
     }
   }
-  recursiveFun(weight, lambda[1L], mu, lambda)
+  do.call(
+    c,
+    lapply(1L:min(d, h), function(i) {
+      lapply(.partitionsFittingRectangleWithZeros(i, w-1L, d-i), function(p) {
+        c(i, p)
+      })
+    })
+  )
 }
 
+.Pairs <- function(set1, set2) {
+  Grid <- as.matrix(expand.grid(seq_along(set1), seq_along(set2)))
+  apply(Grid, 1L, function(ij) {
+    list(set1[[ij[1L]]], set2[[ij[2L]]])
+  }, simplify = FALSE)
+}
 
 #' @title Skew Gelfand-Tsetlin patterns
 #' @description Enumeration of Gelfand-Tsetlin patterns defined by a 
@@ -56,7 +59,6 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   if(ellLambda < ellMu) {
     stop("The partition `mu` is not a subpartition of the partition `lambda`.")
   }
-  wMu <- sum(mu)
   mu <- c(mu, rep(0L, ellLambda - ellMu))
   if(any(lambda < mu)) {
     stop("The partition `mu` is not a subpartition of the partition `lambda`.")
@@ -65,7 +67,7 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
     return(list())
   }
   wLambda <- sum(lambda)
-  if(sum(weight) != wLambda - wMu) {
+  if(sum(weight) != wLambda - sum(mu)) {
     return(list())
   }
   if(all(lambda == mu)) {
@@ -73,37 +75,61 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       list(rbind(lambda, lambda))
     )
   }
+  rweight <- rev(weight)
+  # in case weight contains some zeros - this will be used at the end
+  lines <- rev(cumsum(pmin(1L, c(1L, rweight))))
   #
-  recursiveFun <- function(kappa, w) {
-    d <- sum(kappa) - w[length(w)]
-    if(d == wMu) {
-      if(all(kappa >= mu) &&
-         all(head(mu, -1L) >= tail(kappa, -1L))
-      ) {
-        return(list(rbind(mu, kappa)))
-      } else {
-        return(list())
-      }
-    }
-    partitions <- sandwichedPartitions(d, c(tail(kappa, -1L), 0L), kappa)
-    hw <- head(w, -1L)
-    do.call(
-      c,
-      lapply(partitions, function(nu) {
-        lapply(recursiveFun(nu, hw), function(M) {
-          rbind(M, kappa)
-        })
-      })  
-    )
-  }
-  patterns <- recursiveFun(lambda, weight[weight != 0L])
-  if(any(weight == 0L)) {
-    indices <- cumsum(pmin(1L, c(1L, rev(weight))))  
-    patterns <- lapply(patterns, function(pattern) {
-      pattern[indices, , drop = FALSE]
+  rweight <- rweight[rweight != 0L]
+  m <- lambda[1L]
+  listsOfPartitions <- lapply(head(cumsum(rweight), -1L), function(k) {
+    .partitionsFittingRectangleWithZeros(m, ellLambda, wLambda - k)
+  })
+  listsOfPartitions <- c(
+    list(list(lambda)), 
+    listsOfPartitions, 
+    list(list(mu))
+  )
+  potentialEdges <- do.call(
+    c,
+    lapply(seq_len(length(listsOfPartitions)-1L), function(i) {
+      .Pairs(
+        listsOfPartitions[[i]], 
+        listsOfPartitions[[i+1L]]
+      )
     })
+  )
+  edges <- Filter(
+    function(edge) {
+      all(edge[[1L]] >= edge[[2L]]) &&
+        all(head(edge[[2L]], -1L) >= tail(edge[[1L]], -1L))
+    }, 
+    potentialEdges
+  )
+  if(length(edges) == 0L) {
+    return(list())
   }
-  patterns
+  edgeList <- do.call(rbind, lapply(edges, function(edge) {
+    c(
+      toString(edge[[1L]]),
+      toString(edge[[2L]])
+    )
+  }))
+  gr <- graph_from_edgelist(edgeList)
+  vertices <- t(rbind(vapply(
+    names(V(gr)), 
+    fromString, 
+    integer(ellLambda),
+    USE.NAMES = FALSE)
+  ))
+  paths <- all_simple_paths(
+    gr, 
+    from = toString(lambda), 
+    to = toString(mu), 
+    mode = "out"
+  )
+  lapply(paths, function(path) {
+    vertices[path, , drop = FALSE][lines, , drop = FALSE]
+  })
 }
 
 # convert a skew Gelfand-Tsetlin pattern to a semistandard skew tableau
