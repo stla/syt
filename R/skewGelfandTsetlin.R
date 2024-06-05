@@ -48,7 +48,7 @@ sandwichedPartitions <- function(weight, mu, lambda) {
 #' skewGelfandTsetlinPatterns(c(3, 1, 1), c(2), c(1, 1, 1))
 skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   stopifnot(isPartition(lambda), isPartition(mu))
-  stopifnot(isIntegerVector(weight), length(weight) >= 1L)
+  stopifnot(isIntegerVector(weight))
   lambda <- as.integer(removezeros(lambda))
   mu <- as.integer(removezeros(mu))
   ellLambda <- length(lambda)
@@ -65,12 +65,16 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
     return(list())
   }
   wLambda <- sum(lambda)
-  if(sum(weight) != wLambda - wMu) {
+  wWeight <- sum(weight)
+  if(wWeight != wLambda - wMu) {
     return(list())
   }
-  if(all(lambda == mu)) {
+  if(wWeight == 0L) {
     return(
-      list(rbind(lambda, lambda, deparse.level = 0L))
+      do.call(
+        rbind,
+        replicate(length(weight) + 1L, lambda, simplify = FALSE)
+      )
     )
   }
   #
