@@ -71,10 +71,10 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   }
   if(wWeight == 0L) {
     return(
-      do.call(
+      list(do.call(
         rbind,
         replicate(length(weight) + 1L, lambda, simplify = FALSE)
-      )
+      ))
     )
   }
   #
