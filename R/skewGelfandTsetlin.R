@@ -42,7 +42,7 @@ sandwichedPartitions <- function(weight, mu, lambda) {
 #'   of columns of these matrices is the length of \code{lambda} and the 
 #'   number of rows of these matrices is one plus the length of \code{weight}.
 #' @export
-#' @importFrom igraph graph_from_edgelist V all_simple_paths
+#' @importFrom utils head tail
 #'
 #' @examples
 #' skewGelfandTsetlinPatterns(c(3, 1, 1), c(2), c(1, 1, 1))
