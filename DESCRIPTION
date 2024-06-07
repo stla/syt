@@ -2,7 +2,7 @@ Type: Package
 Package: syt
 Title: Young Tableaux
 Version: 0.4.0.9000
-Date: 2024-06-01
+Date: 2024-06-07
 Author: Stéphane Laurent
 Maintainer: Stéphane Laurent <laurent_step@outlook.fr>
 Description: Deals with Young tableaux (field of combinatorics). For standard
@@ -15,7 +15,6 @@ License: GPL-3
 URL: https://github.com/stla/syt
 BugReports: https://github.com/stla/syt/issues
 Imports: 
-    igraph,
     Matrix,
     partitions,
     utils
