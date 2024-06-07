@@ -119,8 +119,12 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   skewTableau <- lapply(mu, function(i) {
     rep(NA_integer_, i)
   })
+  n <- nrow(pattern)
+  if(n == 1L) {
+    return(skewTableau)
+  }
   partitions <- apply(pattern, 1L, removeTrailingZeros, simplify = FALSE)
-  for(i in 2L:nrow(pattern)) {
+  for(i in 2L:n) {
     skewTableau <- 
       .growTableau(i-1L, skewTableau, partitions[[i]], partitions[[i-1L]])
   }

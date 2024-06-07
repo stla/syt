@@ -6,7 +6,7 @@ removezeros <- function(x){ # e.g c(3,1,0,0) -> c(3,1)
 }
 removeTrailingZeros <- function(x) {
   n <- length(x)
-  while(x[n] == 0 && n > 0L) {
+  while(n > 0L && x[n] == 0) {
     n <- n - 1L
   }
   head(x, n)
