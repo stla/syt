@@ -100,10 +100,9 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       })  
     )
   }
-  rweight <- rev(weight)
-  patterns <- recursiveFun(lambda, rweight[rweight != 0L])
+  patterns <- recursiveFun(lambda, weight[weight != 0L])
   if(any(weight == 0L)) {
-    indices <- cumsum(pmin(1L, c(1L, rweight)))  
+    indices <- cumsum(pmin(1L, c(1L, weight)))  
     patterns <- lapply(patterns, function(pattern) {
       pattern[indices, , drop = FALSE]
     })
