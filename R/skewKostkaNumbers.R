@@ -143,6 +143,18 @@ LRskew <- function(lambda, mu, output = "dataframe") {
   }
 }
 
+lastSubpartition <- function(w, lambda) {
+  if(length(lambda) == 0L) {
+    integer(0L)
+  } else {
+    k <- lambda[1L]
+    if(w <= k) {
+      w
+    } else {
+      c(k, lastSubpartition(w - k, tail(lambda, -1L)))
+    }
+  }
+}
 
 #' @title Skew Kostka numbers
 #' @description Skew Kostka numbers associated to a given skew partition.
@@ -167,28 +179,48 @@ LRskew <- function(lambda, mu, output = "dataframe") {
 #' @examples
 #' skewKostkaNumbers(c(4,2,2), c(2,2))
 skewKostkaNumbers <- function(lambda, mu, output = "vector") {
-  LRcoeffs <- LRskew(lambda, mu, output = "list")
+  # LRcoeffs <- LRskew(lambda, mu, output = "list")
+  # output <- match.arg(output, c("vector", "list"))
+  # partitions <- 
+  #   apply(parts(sum(lambda) - sum(mu)), 2L, removezeros, simplify = FALSE)
+  # names(partitions) <- 
+  #   vapply(partitions, partitionAsString, character(1L))
+  # nus <- LRcoeffs[["nu"]]
+  # coeffs <- LRcoeffs[["coeff"]]
+  # kNumbers <- vapply(partitions, function(partition) {
+  #   sum(coeffs * vapply(nus, function(nu) {
+  #     KostkaNumber(nu, partition)
+  #   }, integer(1L), USE.NAMES = FALSE))
+  # }, integer(1L), USE.NAMES = TRUE)
+  # kNumbers <- kNumbers[kNumbers != 0L]
   output <- match.arg(output, c("vector", "list"))
-  partitions <- 
-    apply(parts(sum(lambda) - sum(mu)), 2L, removezeros, simplify = FALSE)
-  names(partitions) <- 
-    vapply(partitions, partitionAsString, character(1L))
-  nus <- LRcoeffs[["nu"]]
-  coeffs <- LRcoeffs[["coeff"]]
-  kNumbers <- vapply(partitions, function(partition) {
-    sum(coeffs * vapply(nus, function(nu) {
-      KostkaNumber(nu, partition)
+  kappa <- lastSubpartition(sum(lambda)-sum(mu), lambda)
+  nus <- .dominatedPartitions(kappa)
+  lr <- LRskew(lambda, mu, output = "list")
+  pis <- lr[["nu"]]
+  coeffs <- lr[["coeff"]]
+  listOfIndexVectors <- lapply(nus, function(nu) {
+    vapply(pis, function(pi) {
+      .isDominatedBy(nu, pi)
+    }, logical(1L), USE.NAMES = FALSE)
+  })
+  kNumbers <- vapply(seq_along(nus), function(j) {
+    nu <- nus[[j]]
+    i_ <- listOfIndexVectors[[j]]
+    sum(coeffs[i_] * vapply(pis[i_], function(pi) {
+      KostkaNumber(pi, nu)
     }, integer(1L), USE.NAMES = FALSE))
-  }, integer(1L), USE.NAMES = TRUE)
-  kNumbers <- kNumbers[kNumbers != 0L]
+  }, integer(1L), USE.NAMES = FALSE)
+  names(kNumbers) <-
+    vapply(nus, partitionAsString, character(1L), USE.NAMES = FALSE)
   if(output == "vector") {
     kNumbers
   } else {
     mapply(
-      function(nu, value) {
+      function(value, nu) {
         list("nu" = nu, "value" = value)
       },
-      partitions[names(kNumbers)], kNumbers,
+      kNumbers, nus,
       USE.NAMES = TRUE, SIMPLIFY = FALSE
     )
   }

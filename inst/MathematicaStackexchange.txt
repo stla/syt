@@ -1,0 +1,100 @@
+First function: `sandwichedPartitions`. It returns all integer partitions with a given weight and sandwiched between the given integer partitions `mu` and `lambda`. The partition `mu` must be completed with trailing zeros in order that `length(mu)=length(lambda)`.
+
+```
+sandwichedPartitionsHelper = function(d, h0, a_as, b_bs) {
+  if(d < 0 || d < sum(a_as) || d > sum(b_bs)) {
+    return {}
+  } else if(d == 0) {
+    return {{0, 0, ..., 0}} where the number of 0 is length(a_as) (=length(b_bs))
+  } else {
+    a = a_as[[1]]
+    as = a_as[[2 ;;]]
+    b = b_bs[[1]]
+    bs = b_bs[[2 ;;]]
+    hrange = Range(max(0, a), min(h0, b))
+    output = {}
+    for(h in hrange) {
+      partitions = sandwichedPartitionsHelper(d-h, h, as, bs)
+      suboutput = {}
+      for(partition in partitions) {
+        suboutput = Join(suboutput, Join({h}, partition))
+      }
+      output = Join(output, suboutput) (or is it Join(output, {suboutput})?)
+    }
+    return output
+  }
+}
+
+sandwichedPartitions = function(weight, mu, lambda) {
+  return sandwichedPartitionsHelper(weight, lambda[[1]], mu, lambda)
+}
+```
+
+Second function: `skewGelfandTsetlinPatterns`. It takes as arguments two integer partitions `lambda` and `mu` such that `mu` is a subpartition of `lambda`, and a list of integers `weight`.
+
+```
+skewGelfandTsetlinPatternsHelper = function(mu, kappa, w) {
+  d = sum(kappa) - w[[-1]]
+  if(d == sum(mu)) {
+    if(all(kappa >= mu) &&
+       all(mu[[ ;; -2]] >= kappa[[2 ;;]])
+    ) {
+      return {{mu, kappa}}
+    } else {
+      return {}
+    }
+  }
+  partitions = sandwichedPartitions(d, Join(kappa[[2 ;;]], {0}), kappa)
+  hw = w[[ ;; -2]]
+  output = {}
+  for(partition in partitions) {
+    patterns = skewGelfandTsetlinPatternsHelper(mu, partition, hw)
+    suboutput = {}
+    for(pattern in patterns) {
+      suboutput = Join(suboutput, Join(pattern, {kappa}))
+    }
+    output = Join(output, suboutput) (or is it Join(output, {suboutput})?)
+  }
+  return output
+}
+
+skewGelfandTsetlinPatterns = function(lambda, mu, weight) {
+  lambda = removeTrailingZeros(lambda)
+  mu = removeTrailingZeros(mu)
+  ellLambda = length(lambda)
+  ellMu = length(mu)
+  if(ellLambda < ellMu) {
+    error("The partition `mu` must be a subpartition of the partition `lambda`.")
+  }
+  wMu = sum(mu)
+  mu = Join(mu, {0, 0, ..., 0}) so that length(mu)=length(lambda)
+  if(any(lambda < mu)) {
+    error("The partition `mu` must be a subpartition of the partition `lambda`.")
+  }
+  if(any(weight < 0)) {
+    return {}
+  }
+  wLambda = sum(lambda)
+  wWeight = sum(weight)
+  if(wWeight != wLambda - wMu) {
+    return {}
+  }
+  if(wWeight == 0) {
+    return {{lambda, lambda, ..., lambda}} there are length(weight)+1 lambda
+  }
+  filteredWeight = removeAllZeros(weight)
+  patterns = skewGelfandTsetlinPatternsHelper(mu, lambda, filteredWeight)
+  if(any(weight == 0)) {
+    indices = partialSums(Join({1}, Min({1, 1, ... 1}, weight)))
+    newPatterns = {}
+    for(pattern in patterns) {
+      newPattern = pattern[[indices]]
+      newPatterns = Join(newPatterns, {newPattern})
+    }
+    return newPatterns
+  } else {
+    return patterns
+  }
+}
+
+```

@@ -1,17 +1,3 @@
-# lambda and mu are clean
-.isDominatedBy <- function(mu, lambda) {
-  n <- sum(lambda)
-  lambda <- c(lambda, rep(0L, n - length(lambda)))
-  dominated <- TRUE
-  i <- 1L
-  ellMu <- length(mu)
-  while(dominated && i <= ellMu) {
-    dominated <- sum(head(mu, i)) <= sum(head(lambda, i))
-    i <- i + 1L
-  }
-  dominated
-}
-
 .mkPartition <- function(mu0) {
   removezeros(sort(mu0, decreasing = TRUE))
 }

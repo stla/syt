@@ -82,3 +82,29 @@ fromPartitionAsString <- function(string) {
   string <- gsub("(\\[|\\])", "", string)
   as.integer(strsplit(string, ",", fixed = TRUE)[[1L]])
 }
+
+# lambda and mu are clean
+.isDominatedBy <- function(mu, lambda) {
+  n <- sum(lambda)
+  lambda <- c(lambda, rep(0L, n - length(lambda)))
+  dominated <- TRUE
+  i <- 1L
+  ellMu <- length(mu)
+  partialSum_mu <- partialSum_lambda <- 0L
+  while(dominated && i <= ellMu) {
+    partialSum_mu <- partialSum_mu + mu[i]
+    partialSum_lambda <- partialSum_lambda + lambda[i]
+    dominated <- partialSum_mu <= partialSum_lambda
+    i <- i + 1L
+  }
+  dominated
+}
+
+#' @importFrom partitions parts
+#' @noRd
+.dominatedPartitions <- function(lambda) {
+  Filter(
+    function(mu) .isDominatedBy(mu, lambda),
+    apply(parts(sum(lambda)), 2L, removeTrailingZeros, simplify = FALSE)
+  )
+}
