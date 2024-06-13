@@ -200,17 +200,19 @@ skewKostkaNumbers <- function(lambda, mu, output = "vector") {
   pis <- lr[["nu"]]
   coeffs <- lr[["coeff"]]
   listOfIndexVectors <- lapply(nus, function(nu) {
-    vapply(pis, function(pi) {
+    which(vapply(pis, function(pi) {
       .isDominatedBy(nu, pi)
-    }, logical(1L), USE.NAMES = FALSE)
+    }, logical(1L), USE.NAMES = FALSE))
   })
-  kNumbers <- vapply(seq_along(nus), function(j) {
+  indices <- which(lengths(listOfIndexVectors) != 0L)
+  kNumbers <- vapply(indices, function(j) {
     nu <- nus[[j]]
     i_ <- listOfIndexVectors[[j]]
     sum(coeffs[i_] * vapply(pis[i_], function(pi) {
       KostkaNumber(pi, nu)
     }, integer(1L), USE.NAMES = FALSE))
   }, integer(1L), USE.NAMES = FALSE)
+  nus <- nus[indices]
   names(kNumbers) <-
     vapply(nus, partitionAsString, character(1L), USE.NAMES = FALSE)
   if(output == "vector") {
