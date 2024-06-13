@@ -100,11 +100,34 @@ fromPartitionAsString <- function(string) {
   dominated
 }
 
-#' @importFrom partitions parts
-#' @noRd
+# #' @importFrom partitions parts
+# #' @noRd
+# .dominatedPartitions <- function(lambda) {
+#   Filter(
+#     function(mu) .isDominatedBy(mu, lambda),
+#     apply(parts(sum(lambda)), 2L, removeTrailingZeros, simplify = FALSE)
+#   )
+# }
+
 .dominatedPartitions <- function(lambda) {
-  Filter(
-    function(mu) .isDominatedBy(mu, lambda),
-    apply(parts(sum(lambda)), 2L, removeTrailingZeros, simplify = FALSE)
-  )
+  n <- length(lambda)
+  if(n == 0L) {
+    return(list(integer(0L)))
+  }
+  go <- function(h, w, dds, e) {
+    if(w == 0L) {
+      list(integer(0L))
+    } else {
+      arange <- seq_len(min(h, dds[1L] - e))
+      do.call(c, lapply(arange, function(a) {
+        L <- go(a, w-a, dds[-1L], e+a)
+        lapply(L, function(as) {
+          c(a, as)
+        })
+      }))
+    }
+  }
+  weight <- sum(lambda)
+  dsums <- c(cumsum(lambda), rep(weight, weight - n))
+  go(lambda[1L], weight, dsums, 0L)
 }
