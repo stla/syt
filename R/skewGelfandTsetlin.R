@@ -84,13 +84,23 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
   # if(!.isDominatedBy(y, lp)) {
   #   return("UU")
   # }
-  lp <- lastSubpartition(wWeight, lambda)
-  fweight <- weight[weight != 0L]
-  if(!.isDominatedBy(sort(fweight, decreasing = TRUE), lp)) {
-    return(list())
-  }
+  
+  # lp <- lastSubpartition(wWeight, lambda)
+  # lp <- c(lp, rep(0, ellLambda - length(lp)))
+  fWeight <- weight[weight != 0L]
+  # ffweight <- c(fweight, rep(0, ellLambda - length(fweight)))
+  # if(any(head(mu,-1) < tail(sort(ffweight, decreasing = TRUE), -1))) {
+  #   return(list())
+  # }
+  
+  # lp <- lastSubpartition(wWeight, lambda)
+  # fweight <- weight[weight != 0L]
+  # if(!.isDominatedBy(sort(fweight, decreasing = TRUE), lp)) {
+  #   return(list())
+  # }
+  
   tfWeight <- tail(fweight, -1L)
-  bs <- c(rep(lambda[1L], length(tfWeight)), mu)
+  bs <- c(rep(lambda[1L], length(fWeight)), mu)
   #
   recursiveFun <- function(kappa, w) {
     ellW <- length(w)
@@ -108,9 +118,11 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       pmax(mu, c(tail(kappa, -1L), 0L)), 
       pmin(kappa, tail(head(bs, -ellW), ellLambda))
     )
+    
     if(length(partitions) == 0L) {
       return(list())
     }
+    
     # d <- sum(kappa) - w[length(w)]
     # if(d == wMu) {
     #   if(all(kappa >= mu) &&
@@ -132,7 +144,7 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       })  
     )
   }
-  patterns <- recursiveFun(lambda, tfWeight)
+  patterns <- recursiveFun(lambda, fWeight)
   if(any(weight == 0L)) {
     indices <- cumsum(pmin(1L, c(1L, weight)))  
     patterns <- lapply(patterns, function(pattern) {
