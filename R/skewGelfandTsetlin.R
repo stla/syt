@@ -77,19 +77,51 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       ))
     )
   }
+  # y <- sort(weight[weight != 0L], decreasing = TRUE)
+  # x <- lambda
+  # x[tail(seq_len(ellLambda), ellMu)] <- head(mu, ellMu)
+  # lp <- lastSubpartition(wWeight, pmin(lambda, x))
+  # if(!.isDominatedBy(y, lp)) {
+  #   return("UU")
+  # }
+  lp <- lastSubpartition(wWeight, lambda)
+  fweight <- weight[weight != 0L]
+  if(!.isDominatedBy(sort(fweight, decreasing = TRUE), lp)) {
+    return(list())
+  }
+  tfWeight <- tail(fweight, -1L)
+  bs <- c(rep(lambda[1L], length(tfWeight)), mu)
   #
   recursiveFun <- function(kappa, w) {
-    d <- sum(kappa) - w[length(w)]
-    if(d == wMu) {
-      if(all(kappa >= mu) &&
-         all(head(mu, -1L) >= tail(kappa, -1L))
-      ) {
+    ellW <- length(w)
+    if(ellW == 0L) {
+      # if(all(kappa >= mu) &&
+      #    all(head(mu, -1L) >= tail(kappa, -1L))
+      # ) {
         return(list(rbind(mu, kappa, deparse.level = 0L)))
-      } else {
-        return(list())
-      }
+      # } else {
+      #   return(list())
+      # }
     }
-    partitions <- sandwichedPartitions(d, c(tail(kappa, -1L), 0L), kappa)
+    partitions <- sandwichedPartitions(
+      sum(kappa) - w[ellW], 
+      pmax(mu, c(tail(kappa, -1L), 0L)), 
+      pmin(kappa, tail(head(bs, -ellW), ellLambda))
+    )
+    if(length(partitions) == 0L) {
+      return(list())
+    }
+    # d <- sum(kappa) - w[length(w)]
+    # if(d == wMu) {
+    #   if(all(kappa >= mu) &&
+    #      all(head(mu, -1L) >= tail(kappa, -1L))
+    #   ) {
+    #     return(list(rbind(mu, kappa, deparse.level = 0L)))
+    #   } else {
+    #     return(list())
+    #   }
+    # }
+    # partitions <- sandwichedPartitions(d, c(tail(kappa, -1L), 0L), kappa)
     hw <- head(w, -1L)
     do.call(
       c,
@@ -100,7 +132,7 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       })  
     )
   }
-  patterns <- recursiveFun(lambda, weight[weight != 0L])
+  patterns <- recursiveFun(lambda, tfWeight)
   if(any(weight == 0L)) {
     indices <- cumsum(pmin(1L, c(1L, weight)))  
     patterns <- lapply(patterns, function(pattern) {
