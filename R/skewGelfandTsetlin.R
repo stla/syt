@@ -77,22 +77,19 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       ))
     )
   }
-  fWeight <- weight[weight != 0L]
-  bs <- c(rep(lambda[1L], length(fWeight)), mu)
-  #
   recursiveFun <- function(kappa, w) {
     ellW <- length(w)
     if(ellW == 0L) {
       return(list(rbind(mu, deparse.level = 0L)))
     }
+    if(ellLambda > ellW && any(head(mu, -ellW) < tail(kappa, -ellW))) {
+      return(list())
+    } 
     partitions <- sandwichedPartitions(
       sum(kappa) - w[ellW], 
       pmax(mu, c(tail(kappa, -1L), 0L)), 
-      pmin(kappa, tail(head(bs, -ellW), ellLambda))
+      kappa
     )
-    if(length(partitions) == 0L) {
-      return(list())
-    }
     hw <- head(w, -1L)
     do.call(
       c,
@@ -103,7 +100,7 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       })  
     )
   }
-  patterns <- recursiveFun(lambda, fWeight)
+  patterns <- recursiveFun(lambda, weight[weight != 0L])
   if(any(weight == 0L)) {
     indices <- cumsum(pmin(1L, c(1L, weight)))  
     patterns <- lapply(patterns, function(pattern) {
