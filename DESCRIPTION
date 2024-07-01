@@ -10,7 +10,8 @@ Description: Deals with Young tableaux (field of combinatorics). For standard
     Robinson-Schensted correspondence, and conversion to and from paths on
     the Young lattice. Also performs enumeration and counting of 
     semistandard Young tableaux, enumeration of skew semistandard Young 
-    tableaux, and computation of Kostka numbers.
+    tableaux, enumeration of Gelfand-Tsetlin patterns, and computation of 
+    Kostka numbers.
 License: GPL-3
 URL: https://github.com/stla/syt
 BugReports: https://github.com/stla/syt/issues
