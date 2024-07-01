@@ -142,22 +142,6 @@ KostkaNumber <- function(lambda, mu) {
   dsums <- rev(cumsum(rev(diffs)))
   go(n, diffs, dsums, c(lambda, 0L))
 }
-# -- | We assume here that @lambda@ is a partition (non-increasing sequence of /positive/ integers)! 
-# _pieriRule :: [Int] -> Int -> [[Int]] 
-# _pieriRule lambda n
-#     | n == 0     = [lambda]
-#     | n <  0     = [] 
-#     | otherwise  = go n diffs dsums (lambda++[0]) 
-#     where
-#       diffs = n : _diffSequence lambda                 -- maximum we can add to a given row
-#       dsums = reverse $ scanl1 (+) (reverse diffs)    -- partial sums of remaining total we can add
-#       go !k (d:ds) (p:ps@(q:_)) (l:ls) 
-#         | k > p     = []
-#         | otherwise = [ h:tl | a <- [ max 0 (k-q) .. min d k ] , let h = l+a , tl <- go (k-a) ds ps ls ]
-#       go !k [d]    _      [l]    = if k <= d 
-#                                      then if l+k>0 then [[l+k]] else [[]]
-#                                      else []
-#       go !k []     _      _      = if k==0 then [[]] else []
 
 .iteratedPieriRulepp <- function(plambda, coeff0, ns) {
   f <- function(t0, c_ps) {
@@ -168,7 +152,7 @@ KostkaNumber <- function(lambda, mu) {
       if(pAsString %in% names(t)) {
         t[[pAsString]][["coeff"]] <- t[[pAsString]][["coeff"]] + c
       } else {
-        t[[pAsString]] <- list("mu" = p, "coeff" = c)
+        t[[pAsString]] <- list("lambda" = p, "coeff" = c)
       }
       t
     }
@@ -180,20 +164,24 @@ KostkaNumber <- function(lambda, mu) {
     }
     n <- n_ns[1L]
     stuff <- lapply(old, function(lam_coeff) {
-      list(lam_coeff[["coeff"]], .pieriRule(lam_coeff[["mu"]], n))
+      list(lam_coeff[["coeff"]], .pieriRule(lam_coeff[["lambda"]], n))
     })
     new <- Reduce(f, stuff, init = list())
     worker(new, n_ns[-1L])
   }
-  worker(list(list("mu" = plambda, "coeff" = coeff0)), ns)
+  worker(list(list("lambda" = plambda, "coeff" = coeff0)), ns)
 }
-# iteratedPieriRule'' :: Num coeff => (Partition,coeff) -> [Int] -> Map Partition coeff
-# iteratedPieriRule'' (plambda,coeff0) ns = worker (Map.singleton plambda coeff0) ns where
-#   worker old []     = old
-#   worker old (n:ns) = worker new ns where
-#     stuff = [ (coeff, pieriRule lam n) | (lam,coeff) <- Map.toList old ] 
-#     new   = foldl' f Map.empty stuff 
-#     f t0 (c,ps) = foldl' (\t p -> Map.insertWith (+) p c t) t0 ps  
 
+.iteratedPieriRulep <- function(plambda, ns) {
+  .iteratedPieriRulepp(plambda, 1L, ns)
+}
 
+.iteratedPieriRule <- function(ns) {
+  .iteratedPieriRulep(integer(0L), ns)
+}
+
+KostkaNumbersWithGivenMu <- function(mu) {
+  stopifnot(isPartition(mu))
+  .iteratedPieriRule(rev(removeTrailingZeros(as.integer(mu))))
+}
 
