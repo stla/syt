@@ -11,7 +11,7 @@ sandwichedPartitions <- function(weight, mu, lambda) {
       as <- a_as[-1L]
       b <- b_bs[1L]
       bs <- b_bs[-1L]
-      hrange <- .rg(max(0L, a), min(h0, b))
+      hrange <- .rg(max(1L, a), min(h0, b))
       do.call(c, lapply(hrange, function(h) {
         lapply(recursiveFun(d-h, h, as, bs), function(hs) {
           c(h, hs)
@@ -77,63 +77,22 @@ skewGelfandTsetlinPatterns <- function(lambda, mu, weight) {
       ))
     )
   }
-  # y <- sort(weight[weight != 0L], decreasing = TRUE)
-  # x <- lambda
-  # x[tail(seq_len(ellLambda), ellMu)] <- head(mu, ellMu)
-  # lp <- lastSubpartition(wWeight, pmin(lambda, x))
-  # if(!.isDominatedBy(y, lp)) {
-  #   return("UU")
-  # }
-  
-  # lp <- lastSubpartition(wWeight, lambda)
-  # lp <- c(lp, rep(0, ellLambda - length(lp)))
   fWeight <- weight[weight != 0L]
-  # ffweight <- c(fweight, rep(0, ellLambda - length(fweight)))
-  # if(any(head(mu,-1) < tail(sort(ffweight, decreasing = TRUE), -1))) {
-  #   return(list())
-  # }
-  
-  # lp <- lastSubpartition(wWeight, lambda)
-  # fweight <- weight[weight != 0L]
-  # if(!.isDominatedBy(sort(fweight, decreasing = TRUE), lp)) {
-  #   return(list())
-  # }
-  
-  tfWeight <- tail(fweight, -1L)
   bs <- c(rep(lambda[1L], length(fWeight)), mu)
   #
   recursiveFun <- function(kappa, w) {
     ellW <- length(w)
     if(ellW == 0L) {
-      # if(all(kappa >= mu) &&
-      #    all(head(mu, -1L) >= tail(kappa, -1L))
-      # ) {
-        return(list(rbind(mu, kappa, deparse.level = 0L)))
-      # } else {
-      #   return(list())
-      # }
+      return(list(rbind(mu, deparse.level = 0L)))
     }
     partitions <- sandwichedPartitions(
       sum(kappa) - w[ellW], 
       pmax(mu, c(tail(kappa, -1L), 0L)), 
       pmin(kappa, tail(head(bs, -ellW), ellLambda))
     )
-    
     if(length(partitions) == 0L) {
       return(list())
     }
-    
-    # d <- sum(kappa) - w[length(w)]
-    # if(d == wMu) {
-    #   if(all(kappa >= mu) &&
-    #      all(head(mu, -1L) >= tail(kappa, -1L))
-    #   ) {
-    #     return(list(rbind(mu, kappa, deparse.level = 0L)))
-    #   } else {
-    #     return(list())
-    #   }
-    # }
-    # partitions <- sandwichedPartitions(d, c(tail(kappa, -1L), 0L), kappa)
     hw <- head(w, -1L)
     do.call(
       c,
