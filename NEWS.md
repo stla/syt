@@ -15,6 +15,9 @@ semistandard Young tableaux with a given shape and a given weight.
 * New function `skewKostkaNumbers`, to get the Kostka numbers associated to a
 given skew partition.
 
+* New function `KostkaNumbersWithGivenMu`, to get the Kostka numbers 
+`K(lambda, mu)` for a given partition `mu`.
+
 
 # syt 0.4.0
 
