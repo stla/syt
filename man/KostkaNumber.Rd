@@ -32,3 +32,7 @@ KostkaNumber(c(3,2), c(1,1,2,1))
 KostkaNumber(c(3,2), c(1,2,1,1))
 KostkaNumber(c(3,2), c(2,1,1,1))
 }
+\seealso{
+\code{\link{KostkaNumbersWithGivenMu}}, 
+  \code{\link{skewKostkaNumbers}}.
+}

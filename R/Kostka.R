@@ -8,6 +8,8 @@
 #' @return The Kostka number corresponding to \code{lambda} and \code{mu}.
 #' @export
 #' @importFrom utils head tail
+#' @seealso \code{\link{KostkaNumbersWithGivenMu}}, 
+#'   \code{\link{skewKostkaNumbers}}.
 #'
 #' @details
 #' The Kostka number \eqn{K(\lambda,\mu)} is the number of semistandard 
@@ -83,6 +85,8 @@ KostkaNumber <- function(lambda, mu) {
   worker(revlam, cumsum(mu), rep(0L, n-1L), rep(0L, n))
 }
 
+#' @importFrom utils head tail
+#' @noRd
 .pieriRule <- function(lambda, n) {
   if(n == 0L) {
     return(list(lambda))
@@ -150,9 +154,9 @@ KostkaNumber <- function(lambda, mu) {
     g <- function(t, p) {
       pAsString <- partitionAsString(p)
       if(pAsString %in% names(t)) {
-        t[[pAsString]][["coeff"]] <- t[[pAsString]][["coeff"]] + c
+        t[[pAsString]][["value"]] <- t[[pAsString]][["value"]] + c
       } else {
-        t[[pAsString]] <- list("lambda" = p, "coeff" = c)
+        t[[pAsString]] <- list("lambda" = p, "value" = c)
       }
       t
     }
@@ -164,12 +168,12 @@ KostkaNumber <- function(lambda, mu) {
     }
     n <- n_ns[1L]
     stuff <- lapply(old, function(lam_coeff) {
-      list(lam_coeff[["coeff"]], .pieriRule(lam_coeff[["lambda"]], n))
+      list(lam_coeff[["value"]], .pieriRule(lam_coeff[["lambda"]], n))
     })
     new <- Reduce(f, stuff, init = list())
     worker(new, n_ns[-1L])
   }
-  worker(list(list("lambda" = plambda, "coeff" = coeff0)), ns)
+  worker(list(list("lambda" = plambda, "value" = coeff0)), ns)
 }
 
 .iteratedPieriRulep <- function(plambda, ns) {
@@ -180,8 +184,41 @@ KostkaNumber <- function(lambda, mu) {
   .iteratedPieriRulep(integer(0L), ns)
 }
 
-KostkaNumbersWithGivenMu <- function(mu) {
+.KostkaNumbersWithGivenMu <- function(mu) {
+  .iteratedPieriRule(rev(mu))
+}
+
+#' @title Kostka numbers with given \eqn{\mu}
+#' @description Lists all positive Kostka numbers \eqn{K(\lambda,\mu)} with 
+#'   a given partition \eqn{\mu}.
+#' 
+#' @param mu integer partition
+#' @param output the format of the output, either \code{"vector"} or 
+#'   \code{"list"}
+#'
+#' @return If \code{output="vector"}, this function returns a named vector. 
+#'   This vector is made of the positive Kostka numbers 
+#'   \eqn{K(\lambda,\mu)} and its names encode the partitions \eqn{\lambda}.
+#'   If \code{ouput="list"}, this function returns a list of lists. 
+#'   Each of these lists has two 
+#'   elements. The first one is named \code{lambda} and is an integer 
+#'   partition, and the second one is named \code{value} and is a positive 
+#'   integer, the Kostka number \eqn{K(\lambda,\mu)}. It is faster to 
+#'   compute the Kostka numbers with this function than computing the 
+#'   individual Kostka numbers with the function \code{\link{KostkaNumber}}.
+#' @export
+#' @seealso \code{\link{KostkaNumber}}.
+#'
+#' @examples
+#' KostkaNumbersWithGivenMu(c(2, 1, 1))
+KostkaNumbersWithGivenMu <- function(mu, output = "vector") {
   stopifnot(isPartition(mu))
-  .iteratedPieriRule(rev(removeTrailingZeros(as.integer(mu))))
+  output <- match.arg(output, c("vector", "list"))
+  kNumbers <- .KostkaNumbersWithGivenMu(removeTrailingZeros(as.integer(mu)))
+  if(output == "vector") {
+    vapply(kNumbers, `[[`, integer(1L), "value", USE.NAMES = TRUE)
+  } else {
+    kNumbers
+  }
 }
 

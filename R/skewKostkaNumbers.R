@@ -205,11 +205,15 @@ skewKostkaNumbers <- function(lambda, mu, output = "vector") {
     }, logical(1L), USE.NAMES = FALSE))
   })
   indices <- which(lengths(listOfIndexVectors) != 0L)
+  pisAsStrings <- 
+    vapply(pis, partitionAsString, character(1L), USE.NAMES = FALSE)
   kNumbers <- vapply(indices, function(j) {
     nu <- nus[[j]]
+    kNumbers_nu <- .KostkaNumbersWithGivenMu(nu)
     i_ <- listOfIndexVectors[[j]]
-    sum(coeffs[i_] * vapply(pis[i_], function(pi) {
-      KostkaNumber(pi, nu)
+    sum(coeffs[i_] * vapply(pisAsStrings[i_], function(piAsString) {
+      kNumbers_nu[[piAsString]][["value"]]
+#      KostkaNumber(pi, nu)
     }, integer(1L), USE.NAMES = FALSE))
   }, integer(1L), USE.NAMES = FALSE)
   nus <- nus[indices]
