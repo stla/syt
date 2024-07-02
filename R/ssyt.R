@@ -43,6 +43,7 @@ count_ssytx <- function(lambda, n) {
 #' @return List of all semistandard Young tableaux with shape \code{lambda} 
 #'   and filled with integers between \code{1} and \code{n}.
 #' @export
+#' @seealso \code{\link{ssytx_withGivenShapeAndWeight}}.
 #'
 #' @examples
 #' ssytx <- all_ssytx(c(2, 1), 3)
@@ -91,6 +92,7 @@ all_ssytx <- function(lambda, n) {
 #' @return List of all semistandard Young tableaux with shape \code{lambda} 
 #'   and weight \code{weight}.
 #' @export
+#' @seealso \code{\link{all_ssytx}}.
 #'
 #' @examples
 #' ssytx <- ssytx_withGivenShapeAndWeight(c(4, 1), c(0, 2, 1, 1, 1))

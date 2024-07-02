@@ -28,3 +28,6 @@ Enumeration of Gelfand-Tsetlin patterns defined by a given
 GTpatterns <- GelfandTsetlinPatterns(c(3, 1), c(1, 1, 1, 1))
 lapply(GTpatterns, prettyGT)
 }
+\seealso{
+\code{\link{skewGelfandTsetlinPatterns}}.
+}

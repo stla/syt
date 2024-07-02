@@ -26,3 +26,7 @@ Enumeration of all semistandard skew tableaux with given shape
 ssstx <- all_ssSkewTableaux(c(4, 3, 1), c(2, 2), 2)
 lapply(ssstx, prettySkewTableau)
 }
+\seealso{
+\code{\link{all_ssytx}},
+  \code{\link{skewTableauxWithGivenShapeAndWeight}}.
+}

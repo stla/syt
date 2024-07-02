@@ -31,3 +31,6 @@ Enumeration of Gelfand-Tsetlin patterns defined by a
 \examples{
 skewGelfandTsetlinPatterns(c(3, 1, 1), c(2), c(1, 1, 1))
 }
+\seealso{
+\code{\link{GelfandTsetlinPatterns}}.
+}

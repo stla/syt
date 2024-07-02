@@ -22,6 +22,8 @@ mkSkewTableau <- function(skewTableau) {
 #'   partition defined by \code{lambda} and \code{mu} and with maximum entry 
 #'   \code{n}.
 #' @export
+#' @seealso \code{\link{all_ssytx}},
+#'   \code{\link{skewTableauxWithGivenShapeAndWeight}}.
 #'
 #' @examples
 #' ssstx <- all_ssSkewTableaux(c(4, 3, 1), c(2, 2), 2)

@@ -107,6 +107,7 @@
 #'   second element is an integer vector of length two, and so on. The length 
 #'   of this list is the length of \code{weight}.
 #' @export
+#' @seealso \code{\link{skewGelfandTsetlinPatterns}}.
 #'
 #' @examples
 #' GTpatterns <- GelfandTsetlinPatterns(c(3, 1), c(1, 1, 1, 1))

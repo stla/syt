@@ -24,3 +24,6 @@ Generates all semistandard Young tableaux of a given shape and
 ssytx <- all_ssytx(c(2, 1), 3)
 lapply(ssytx, prettyTableau)
 }
+\seealso{
+\code{\link{ssytx_withGivenShapeAndWeight}}.
+}

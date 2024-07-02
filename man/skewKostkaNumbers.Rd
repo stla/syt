@@ -30,3 +30,6 @@ Skew Kostka numbers associated to a given skew partition.
 \examples{
 skewKostkaNumbers(c(4,2,2), c(2,2))
 }
+\seealso{
+\code{\link{KostkaNumber}}, \code{\link{KostkaNumbersWithGivenMu}}.
+}

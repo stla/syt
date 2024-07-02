@@ -43,6 +43,7 @@ sandwichedPartitions <- function(weight, mu, lambda) {
 #'   number of rows of these matrices is one plus the length of \code{weight}.
 #' @export
 #' @importFrom utils head tail
+#' @seealso \code{\link{GelfandTsetlinPatterns}}.
 #'
 #' @examples
 #' skewGelfandTsetlinPatterns(c(3, 1, 1), c(2), c(1, 1, 1))

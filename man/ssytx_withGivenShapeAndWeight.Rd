@@ -25,3 +25,6 @@ Enumeration of all semistandard Young tableaux with a given
 ssytx <- ssytx_withGivenShapeAndWeight(c(4, 1), c(0, 2, 1, 1, 1))
 lapply(ssytx, prettyTableau)
 }
+\seealso{
+\code{\link{all_ssytx}}.
+}

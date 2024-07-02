@@ -99,20 +99,20 @@ finish <- function(xxs) {
 #'   given as integer vectors.
 #' @noRd
 LRskew <- function(lambda, mu, output = "dataframe") {
-  stopifnot(isPartition(lambda), isPartition(mu))
   output <- match.arg(output, c("list", "dataframe"))
-  lambda <- as.integer(removeTrailingZeros(lambda))
-  mu <- as.integer(removeTrailingZeros(mu))
+  # lambda <- as.integer(removeTrailingZeros(lambda))
+  # mu <- as.integer(removeTrailingZeros(mu))
+  # ellLambda <- length(lambda)
+  # ellMu <- length(mu)
+  # if(ellLambda < ellMu) {
+  #   stop("The partition `mu` is not a subpartition of the partition `lambda`.")
+  # }
+  # mu <- c(mu, rep(0L, ellLambda - ellMu))
+  # if(any(lambda < mu)) {
+  #   stop("The partition `mu` is not a subpartition of the partition `lambda`.")
+  # }
   ellLambda <- length(lambda)
-  ellMu <- length(mu)
-  if(ellLambda < ellMu) {
-    stop("The partition `mu` is not a subpartition of the partition `lambda`.")
-  }
-  mu <- c(mu, rep(0L, ellLambda - ellMu))
-  if(any(lambda < mu)) {
-    stop("The partition `mu` is not a subpartition of the partition `lambda`.")
-  }
-  n <- sum(lambda - mu)
+  n <- sum(lambda) - sum(mu)
   if(n == 0L) {
     if(output == "dataframe") {
       return(data.frame("coeff" = 1L, "nu" = "[]"))
@@ -120,6 +120,7 @@ LRskew <- function(lambda, mu, output = "dataframe") {
       return(list("coeff" = 1L, "nu" = list(integer(0L))))
     }
   }
+  mu <- c(mu, rep(0L, ellLambda - length(mu)))
   f <- function(old, nu) {
     insertWith(`+`, old, partitionAsString(nu), 1L)
   }
@@ -175,25 +176,20 @@ lastSubpartition <- function(w, lambda) {
 #'   non-null skew Kostka numbers are provided by this list.
 #' @export
 #' @importFrom partitions parts
+#' @seealso \code{\link{KostkaNumber}}, \code{\link{KostkaNumbersWithGivenMu}}.
 #'
 #' @examples
 #' skewKostkaNumbers(c(4,2,2), c(2,2))
 skewKostkaNumbers <- function(lambda, mu, output = "vector") {
-  # LRcoeffs <- LRskew(lambda, mu, output = "list")
-  # output <- match.arg(output, c("vector", "list"))
-  # partitions <- 
-  #   apply(parts(sum(lambda) - sum(mu)), 2L, removezeros, simplify = FALSE)
-  # names(partitions) <- 
-  #   vapply(partitions, partitionAsString, character(1L))
-  # nus <- LRcoeffs[["nu"]]
-  # coeffs <- LRcoeffs[["coeff"]]
-  # kNumbers <- vapply(partitions, function(partition) {
-  #   sum(coeffs * vapply(nus, function(nu) {
-  #     KostkaNumber(nu, partition)
-  #   }, integer(1L), USE.NAMES = FALSE))
-  # }, integer(1L), USE.NAMES = TRUE)
-  # kNumbers <- kNumbers[kNumbers != 0L]
+  stopifnot(isPartition(lambda), isPartition(mu))
   output <- match.arg(output, c("vector", "list"))
+  lambda <- as.integer(removeTrailingZeros(lambda))
+  mu <- as.integer(removeTrailingZeros(mu))
+  ellLambda <- length(lambda)
+  ellMu <- length(mu)
+  if(ellLambda < ellMu || any(head(lambda, ellMu) < mu)) {
+    stop("The partition `mu` is not a subpartition of the partition `lambda`.")
+  }
   kappa <- lastSubpartition(sum(lambda)-sum(mu), lambda)
   nus <- .dominatedPartitions(kappa)
   lr <- LRskew(lambda, mu, output = "list")
@@ -213,7 +209,6 @@ skewKostkaNumbers <- function(lambda, mu, output = "vector") {
     i_ <- listOfIndexVectors[[j]]
     sum(coeffs[i_] * vapply(pisAsStrings[i_], function(piAsString) {
       kNumbers_nu[[piAsString]][["value"]]
-#      KostkaNumber(pi, nu)
     }, integer(1L), USE.NAMES = FALSE))
   }, integer(1L), USE.NAMES = FALSE)
   nus <- nus[indices]
@@ -231,4 +226,3 @@ skewKostkaNumbers <- function(lambda, mu, output = "vector") {
     )
   }
 }
-
