@@ -9,6 +9,7 @@
 #' @return The number of semistandard Young tableaux with shape \code{lambda} 
 #'   and filled with integers between \code{1} and \code{n}.
 #' @export
+#' @seealso \code{\link{KostkaNumber}}.
 #'
 #' @examples
 #' count_ssytx(c(4, 3, 3, 2), 5)

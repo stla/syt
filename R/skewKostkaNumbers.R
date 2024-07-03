@@ -175,9 +175,15 @@ lastSubpartition <- function(w, lambda) {
 #'   \eqn{K_{\lambda/\mu,\nu}} in the field named \code{"value"}. Only the 
 #'   non-null skew Kostka numbers are provided by this list.
 #' @export
-#' @importFrom partitions parts
 #' @seealso \code{\link{KostkaNumber}}, \code{\link{KostkaNumbersWithGivenMu}}.
 #'
+#' @details
+#'   The skew Kostka number \eqn{K_{\lambda/\mu,\nu}} is the number of skew 
+#'   semistandard Young tableaux with shape \eqn{\lambda/\mu} and weight 
+#'   \eqn{\nu}. The \emph{weight} of a Young tableau is the 
+#'   vector whose \eqn{i}-th element is the number of occurrences of \eqn{i} 
+#'   in this tableau.
+#'   
 #' @examples
 #' skewKostkaNumbers(c(4,2,2), c(2,2))
 skewKostkaNumbers <- function(lambda, mu, output = "vector") {

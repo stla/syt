@@ -31,6 +31,9 @@ KostkaNumber(c(3,2), c(1,1,1,2))
 KostkaNumber(c(3,2), c(1,1,2,1))
 KostkaNumber(c(3,2), c(1,2,1,1))
 KostkaNumber(c(3,2), c(2,1,1,1))
+lambda <- c(4, 3, 1)
+mu <- rep(1, sum(lambda))
+KostkaNumber(lambda, mu) == count_sytx(lambda) # should be TRUE
 }
 \seealso{
 \code{\link{KostkaNumbersWithGivenMu}}, 

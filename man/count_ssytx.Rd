@@ -23,3 +23,6 @@ Number of semistandard Young tableaux of a given shape and
 \examples{
 count_ssytx(c(4, 3, 3, 2), 5)
 }
+\seealso{
+\code{\link{KostkaNumber}}.
+}

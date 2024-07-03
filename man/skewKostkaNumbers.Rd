@@ -27,6 +27,13 @@ If \code{output="vector"}, the function returns a named vector.
 \description{
 Skew Kostka numbers associated to a given skew partition.
 }
+\details{
+The skew Kostka number \eqn{K_{\lambda/\mu,\nu}} is the number of skew 
+  semistandard Young tableaux with shape \eqn{\lambda/\mu} and weight 
+  \eqn{\nu}. The \emph{weight} of a Young tableau is the 
+  vector whose \eqn{i}-th element is the number of occurrences of \eqn{i} 
+  in this tableau.
+}
 \examples{
 skewKostkaNumbers(c(4,2,2), c(2,2))
 }
