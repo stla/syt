@@ -1,12 +1,15 @@
-The ‘syt’ package: Young tableaux
-================
+---
+title: "The 'syt' package: Young tableaux"
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/stla/syt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stla/syt/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-------------------------------------------------------------------------
+___
 
 ## Standard Young tableaux
 
@@ -26,25 +29,28 @@ The ‘syt’ package: Young tableaux
 
 ![](http://stla.github.io/stlapblog/posts/assets/img/young_yng_path.png)
 
-    > gprocess2syt(list(1, 2, c(2,1), c(2,2), c(2,2,1)))
-    [[1]]
-    [1] 1 2
+```
+> gprocess2syt(list(1, 2, c(2,1), c(2,2), c(2,2,1)))
+[[1]]
+[1] 1 2
 
-    [[2]]
-    [1] 3 4
+[[2]]
+[1] 3 4
 
-    [[3]]
-    [1] 5
+[[3]]
+[1] 5
+```
 
 ## Other features
 
-- Generation of all semistandard tableaux, possibly skew, with a given
-  shape and a given maximal entry
+- Generation of all semistandard tableaux, possibly skew, with a given shape
+and a given maximal entry
 
-- Generation of all semistandard tableaux, possibly skew, with a given
-  shape and a given weight
+- Generation of all semistandard tableaux, possibly skew, with a given shape
+and a given weight
 
-- Generation of all Gelfand-Tsetlin patterns defined by an integer
-  partition, possibly skew, with a given weight
+- Generation of all Gelfand-Tsetlin patterns defined by an integer partition,
+possibly skew, with a given weight
 
 - Computation of Kostka numbers and skew Kostka numbers
+
