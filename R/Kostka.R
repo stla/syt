@@ -293,7 +293,7 @@ KostkaNumbersWithGivenLambda <- function(lambda, output = "vector") {
             kappaOrd <- sort(kappa, decreasing = TRUE)
             kappaOrdAsString <- partitionAsString(kappaOrd)
             if(kappaOrdAsString %in% musAsStrings){
-              x <- x + kNumbers[kappaOrdAsString] * (dmuij + 2L*t) / ee
+              x <- x + kNumbers[kappaOrdAsString] * (dmuij + 2L*t) 
             }
           }
           mu_i_plus_mu_j <- mu_i + mu_j
