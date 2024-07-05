@@ -22,3 +22,19 @@ test_that("Kostka numbers with given mu", {
     all(kNumbers[setdiff(names(kNumbers), names(kNumbers_mu))] == 0L)
   )
 })
+
+test_that("Kostka numbers with given lambda", {
+  lambda <- c(3, 3, 2, 1)
+  kNumbers_lambda <- KostkaNumbersWithGivenLambda(lambda, output = "vector")
+  mus <- partitions::parts(sum(lambda))
+  kNumbers <- apply(mus, 2L, function(mu) KostkaNumber(lambda, mu))
+  names(kNumbers) <- apply(mus, 2L, function(mu) {
+    partitionAsString(removeTrailingZeros(mu))
+  })
+  expect_true(
+    all(kNumbers[names(kNumbers_lambda)] == kNumbers_lambda)
+  )
+  expect_true(
+    all(kNumbers[setdiff(names(kNumbers), names(kNumbers_lambda))] == 0L)
+  )
+})

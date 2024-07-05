@@ -9,6 +9,7 @@
 #' @export
 #' @importFrom utils head tail
 #' @seealso \code{\link{KostkaNumbersWithGivenMu}}, 
+#'   \code{\link{KostkaNumbersWithGivenLambda}}, 
 #'   \code{\link{skewKostkaNumbers}}.
 #'
 #' @details
@@ -210,7 +211,8 @@ KostkaNumber <- function(lambda, mu) {
 #'   compute the Kostka numbers with this function than computing the 
 #'   individual Kostka numbers with the function \code{\link{KostkaNumber}}.
 #' @export
-#' @seealso \code{\link{KostkaNumber}}.
+#' @seealso \code{\link{KostkaNumber}}, 
+#'   \code{\link{KostkaNumbersWithGivenLambda}}.
 #'
 #' @examples
 #' KostkaNumbersWithGivenMu(c(2, 1, 1))
@@ -225,3 +227,95 @@ KostkaNumbersWithGivenMu <- function(mu, output = "vector") {
   }
 }
 
+#' @title Kostka numbers with given \eqn{\lambda}
+#' @description Lists all positive Kostka numbers \eqn{K(\lambda,\mu)} with 
+#'   a given partition \eqn{\lambda}.
+#' 
+#' @param lambda integer partition
+#' @param output the format of the output, either \code{"vector"} or 
+#'   \code{"list"}
+#'
+#' @return If \code{output="vector"}, this function returns a named vector. 
+#'   This vector is made of the positive Kostka numbers 
+#'   \eqn{K(\lambda,\mu)} and its names encode the partitions \eqn{\mu}.
+#'   If \code{ouput="list"}, this function returns a list of lists. 
+#'   Each of these lists has two 
+#'   elements. The first one is named \code{mu} and is an integer 
+#'   partition, and the second one is named \code{value} and is a positive 
+#'   integer, the Kostka number \eqn{K(\lambda,\mu)}. It is faster to 
+#'   compute the Kostka numbers with this function than computing the 
+#'   individual Kostka numbers with the function \code{\link{KostkaNumber}}.
+#' @export
+#' @importFrom partitions conjugate
+#' @importFrom utils tail
+#' @seealso \code{\link{KostkaNumber}}, 
+#'   \code{\link{KostkaNumbersWithGivenMu}}.
+#'
+#' @examples
+#' KostkaNumbersWithGivenMu(c(2, 1, 1))
+KostkaNumbersWithGivenLambda <- function(lambda, output = "vector") {
+  stopifnot(isPartition(lambda))
+  output <- match.arg(output, c("vector", "list"))
+  lambda <- removeTrailingZeros(as.integer(lambda))
+  mus <- rev(.dominatedPartitions(lambda))
+  kNumbers <- rep(NA_integer_, length(mus))
+  musAsStrings <-
+    vapply(mus, partitionAsString, character(1L), USE.NAMES = FALSE)
+  names(mus) <- names(kNumbers) <- musAsStrings
+  ellLambda <- length(lambda)
+  if(ellLambda == 0L || ellLambda == 1L) {
+    kNumbers <- 1L
+  } else {
+    lambdap <- conjugate(lambda)
+    nlambda <- sum(seq_len(ellLambda - 1L) * tail(lambda, -1L))
+    nlambdap <- sum(seq_len(lambda[1L] - 1L) * tail(lambdap, -1L))
+    elambda <- nlambdap - nlambda
+    kNumbers[1L] <- 1L
+    for(muAsString in tail(musAsStrings, -1L)) {
+      mu <- mus[[muAsString]]
+      mup <- conjugate(mu)
+      ellMu <- mup[1L]
+      i_ <- seq_len(ellMu - 1L)
+      nmu <- sum(i_ * tail(mu, -1L))
+      nmup <- sum(seq_len(mu[1L] - 1L) * tail(mup, -1L))
+      emu <- nmup - nmu
+      ee <- elambda - emu 
+      x <- 0L
+      for(i in i_) {
+        mu_i <- mu[i]
+        for(j in (i+1L):ellMu) {
+          mu_j <- mu[j]
+          dmuij <- mu_i - mu_j
+          kappa <- mu
+          for(t in seq_len(mu_j - 1L)) {
+            kappa[i] <- mu_i + t
+            kappa[j] <- mu_j - t
+            kappaOrd <- sort(kappa, decreasing = TRUE)
+            kappaOrdAsString <- partitionAsString(kappaOrd)
+            if(kappaOrdAsString %in% musAsStrings){
+              x <- x + kNumbers[kappaOrdAsString] * (dmuij + 2L*t) / ee
+            }
+          }
+          mu_i_plus_mu_j <- mu_i + mu_j
+          kappa[i] <- mu_i_plus_mu_j
+          kappaOrd <- sort(kappa[-j], decreasing = TRUE)
+          kappaOrdAsString <- partitionAsString(kappaOrd)
+          if(kappaOrdAsString %in% musAsStrings){
+            x <- x + kNumbers[kappaOrdAsString] * mu_i_plus_mu_j
+          }
+        }
+      }
+      kNumbers[muAsString] <- x %/% ee
+    }
+  }
+  if(output == "list") {
+    kNumbers <- mapply(
+      function(kNumber, mu) {
+        list("mu" = mu, "value" = kNumber)
+      },
+      kNumbers, mus,
+      USE.NAMES = TRUE, SIMPLIFY = FALSE
+    )
+  }
+  kNumbers
+}

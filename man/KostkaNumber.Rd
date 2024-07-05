@@ -37,5 +37,6 @@ KostkaNumber(lambda, mu) == count_sytx(lambda) # should be TRUE
 }
 \seealso{
 \code{\link{KostkaNumbersWithGivenMu}}, 
+  \code{\link{KostkaNumbersWithGivenLambda}}, 
   \code{\link{skewKostkaNumbers}}.
 }

@@ -2,6 +2,7 @@
 
 export(GelfandTsetlinPatterns)
 export(KostkaNumber)
+export(KostkaNumbersWithGivenLambda)
 export(KostkaNumbersWithGivenMu)
 export(RS)
 export(all_ssSkewTableaux)
