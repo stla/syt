@@ -252,25 +252,24 @@ KostkaNumbersWithGivenMu <- function(mu, output = "vector") {
 #'   \code{\link{KostkaNumbersWithGivenMu}}.
 #'
 #' @examples
-#' KostkaNumbersWithGivenMu(c(2, 1, 1))
+#' KostkaNumbersWithGivenLambda(c(2, 1, 1))
 KostkaNumbersWithGivenLambda <- function(lambda, output = "vector") {
   stopifnot(isPartition(lambda))
   output <- match.arg(output, c("vector", "list"))
   lambda <- removeTrailingZeros(as.integer(lambda))
   mus <- rev(.dominatedPartitions(lambda))
-  kNumbers <- rep(NA_integer_, length(mus))
+  nmus <- length(mus)
+  kNumbers <- rep(1L, nmus)
   musAsStrings <-
     vapply(mus, partitionAsString, character(1L), USE.NAMES = FALSE)
-  names(mus) <- names(kNumbers) <- musAsStrings
+  names(kNumbers) <- musAsStrings
   ellLambda <- length(lambda)
-  if(ellLambda == 0L || ellLambda == 1L) {
-    kNumbers <- 1L
-  } else {
+  if(nmus >= 2L && ellLambda >= 2L) {
+    names(mus) <- musAsStrings
     lambdap <- conjugate(lambda)
     nlambda <- sum(seq_len(ellLambda - 1L) * tail(lambda, -1L))
     nlambdap <- sum(seq_len(lambda[1L] - 1L) * tail(lambdap, -1L))
     elambda <- nlambdap - nlambda
-    kNumbers[1L] <- 1L
     for(muAsString in tail(musAsStrings, -1L)) {
       mu <- mus[[muAsString]]
       mup <- conjugate(mu)
