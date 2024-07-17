@@ -21,6 +21,10 @@ given skew partition.
 * New function `KostkaNumbersWithGivenLambda`, to get the Kostka numbers 
 `K(lambda, mu)` for a given partition `lambda`.
 
+* New function `KostkaNumbers`, to get all the Kostka numbers 
+`K(lambda, mu)` for given partitions `lambda` and `mu` of a given weight.
+
+
 
 # syt 0.4.0
 

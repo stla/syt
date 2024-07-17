@@ -2,7 +2,7 @@
 % Please edit documentation in R/Kostka.R
 \name{KostkaNumber}
 \alias{KostkaNumber}
-\title{Kostka numbers}
+\title{Kostka number}
 \usage{
 KostkaNumber(lambda, mu)
 }

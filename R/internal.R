@@ -131,3 +131,12 @@ fromPartitionAsString <- function(string) {
   dsums <- c(cumsum(lambda), rep(weight, weight - n))
   go(lambda[1L], weight, dsums, 0L)
 }
+
+#' @importFrom partitions parts
+listOfPartitions <- function(n) {
+  if(n == 0L) {
+    list(integer(0L))
+  } else {
+    apply(parts(n), 2L, removeTrailingZeros, simplify = FALSE)
+  }
+}

@@ -6,6 +6,9 @@ The ‘syt’ package: Young tableaux
 [![R-CMD-check](https://github.com/stla/syt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stla/syt/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+The first version of this package dealt with standard Young tableaux
+only, but now it contains more stuff related to Young tableaux.
+
 ------------------------------------------------------------------------
 
 ## Standard Young tableaux

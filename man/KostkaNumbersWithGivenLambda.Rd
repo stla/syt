@@ -29,7 +29,7 @@ Lists all positive Kostka numbers \eqn{K(\lambda,\mu)} with
   a given partition \eqn{\lambda}.
 }
 \examples{
-KostkaNumbersWithGivenMu(c(2, 1, 1))
+KostkaNumbersWithGivenLambda(c(2, 1, 1))
 }
 \seealso{
 \code{\link{KostkaNumber}}, 

@@ -1,4 +1,4 @@
-#' Kostka numbers
+#' Kostka number
 #' @description Computes a Kostka number.
 #'
 #' @param lambda an integer partition
@@ -317,4 +317,40 @@ KostkaNumbersWithGivenLambda <- function(lambda, output = "vector") {
     )
   }
   kNumbers
+}
+
+#' @title Kostka numbers for all partitions of a given weight
+#' @description Computes the positive Kostka numbers for all integer partitions 
+#'   of a given weight
+#' @param n positive integer, the weight of the partitions
+#'
+#' @return An integer matrix, whose row names and column names encode the 
+#'   partitions.
+#' @export
+#'
+#' @examples
+#' KostkaNumbers(4)
+KostkaNumbers <- function(n) {
+  stopifnot(isPositiveInteger(n))
+  if(n == 0L) {
+    Knumbers <- matrix(1L)
+    colnames(Knumbers) <- rownames(Knumbers) <- partitionAsString(integer(0L))
+    return(Knumbsers)
+  }
+  lambdas <- listOfPartitions(n)
+  lambdasAsStrings <-
+    vapply(lambdas, partitionAsString, character(1L), USE.NAMES = FALSE)
+  zeros <- rep(0L, length(lambdas))
+  names(zeros) <- lambdasAsStrings
+  Knumbers <- do.call(
+    rbind,
+    lapply(lambdas, function(lambda) {
+      kNumbersLambda <-
+        KostkaNumbersWithGivenLambda(lambda, output = "vector")
+      zeros[names(kNumbersLambda)] <- kNumbersLambda
+      zeros
+    })
+  )
+  colnames(Knumbers) <- rownames(Knumbers) <- lambdasAsStrings
+  Knumbers
 }
