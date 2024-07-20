@@ -8,3 +8,5 @@
 ^\.github$
 ^inst$
 ^README\.Rmd$
+^syt\.sublime-project$
+^syt\.sublime-workspace$

@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' rsyt(c(7,3,1))
+#' rsyt(c(7, 3, 1))
 rsyt <- function(lambda){
   lambda <- as.integer(checkPartition(lambda))
   N <- sum(lambda)

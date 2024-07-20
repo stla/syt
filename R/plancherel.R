@@ -3,7 +3,7 @@ connectedParts <- function(lambda0){
   lambda[1L] <- lambda[1L]+1L
   out <- list(lambda)
   for(i in seq_along(lambda0)[-1L]){
-    if(lambda0[i]<lambda0[i-1L]){
+    if(lambda0[i] < lambda0[i-1L]){
       lambda <- lambda0
       lambda[i] <- lambda[i]+1L
       out <- c(out, list(lambda))

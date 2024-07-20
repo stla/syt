@@ -236,8 +236,9 @@ KostkaNumbersWithGivenMu <- function(mu, output = "vector") {
 #'   \code{"list"}
 #'
 #' @return If \code{output="vector"}, this function returns a named vector. 
-#'   This vector is made of the positive Kostka numbers 
-#'   \eqn{K(\lambda,\mu)} and its names encode the partitions \eqn{\mu}.
+#'   This vector is made of the non-zero (i.e. positive) Kostka numbers 
+#'   \eqn{K(\lambda,\mu)}, which are integers, and its names encode the 
+#'   partitions \eqn{\mu}.
 #'   If \code{ouput="list"}, this function returns a list of lists. 
 #'   Each of these lists has two 
 #'   elements. The first one is named \code{mu} and is an integer 
@@ -320,12 +321,13 @@ KostkaNumbersWithGivenLambda <- function(lambda, output = "vector") {
 }
 
 #' @title Kostka numbers for all partitions of a given weight
-#' @description Computes the positive Kostka numbers for all integer partitions 
+#' @description Computes the Kostka numbers for all integer partitions 
 #'   of a given weight
 #' @param n positive integer, the weight of the partitions
 #'
 #' @return An integer matrix, whose row names and column names encode the 
-#'   partitions.
+#'   partitions \eqn{\lambda} and \eqn{\mu} and whose entries are the 
+#'   Kostka numbers \eqn{K(\lambda,\mu)}.
 #' @export
 #'
 #' @examples

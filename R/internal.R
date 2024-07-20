@@ -133,6 +133,7 @@ fromPartitionAsString <- function(string) {
 }
 
 #' @importFrom partitions parts
+#' @noRd
 listOfPartitions <- function(n) {
   if(n == 0L) {
     list(integer(0L))

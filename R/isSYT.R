@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' tbl <- list(c(1,2,6), c(3,5), 4)
+#' tbl <- list(c(1, 2, 6), c(3, 5), 4)
 #' isSYT(tbl)
 isSYT <- function(tableau){
   contents <- unlist(tableau)
@@ -28,7 +28,7 @@ isSYT <- function(tableau){
 #' @export
 #'
 #' @examples
-#' tbl <- list(c(1,2,6), c(5,5), 7)
+#' tbl <- list(c(1, 2, 6), c(5, 5), 7)
 #' isSSYT(tbl)
 isSSYT <- function(tableau){
   stopifnot(isTableau(tableau))

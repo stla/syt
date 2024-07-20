@@ -8,15 +8,16 @@ ytbl <- function(N, lambda, a, more){
     isave <- 0L
 
     for(i in 2L:N){
-      lambda[a[i]] <- lambda[a[i]] + 1L
-      if(a[i] < a[i-1L]){
+      a_i <- a[i]
+      lambda[a_i] <- lambda[a_i] + 1L
+      if(a_i < a[i-1L]){
         isave <- i
         break
       }
     }
 
     if(isave == 0L){
-      return(list(a=a, more=FALSE))
+      return(list(a = a, more = FALSE))
     }
 
     it <- lambda[a[isave]+1L]
@@ -53,21 +54,21 @@ ytbl <- function(N, lambda, a, more){
   }
 
   if(N == 1L){
-    return(list(a=a, more=FALSE))
+    return(list(a = a, more = FALSE))
   }
 
   for(j in seq_len(N-1L)){
     if(a[j+1L] < a[j]){
-      return(list(a=a, more=TRUE))
+      return(list(a = a, more = TRUE))
     }
   }
 
-  return(list(a=a, more=FALSE))
+  return(list(a = a, more = FALSE))
 }
 
 #' Enumeration of standard Young tableaux
 #' @description Generates all standard Young tableaux of a given shape.
-#' @param lambda shape, an integer partition
+#' @param lambda the shape, an integer partition
 #'
 #' @return A list of standard Young tableaux.
 #' @export
@@ -141,8 +142,9 @@ all_sytx <- function(lambda){
   isave <- 0L;
 
   for(i in 2L:N){
-    lambda[a[i]] <- lambda[a[i]] + 1L
-    if(a[i] < a[i-1L]){
+    a_i <- a[i]
+    lambda[a_i] <- lambda[a_i] + 1L
+    if(a_i < a[i-1L]){
       isave <- i
       break
     }
@@ -176,7 +178,7 @@ all_sytx <- function(lambda){
 #' @export
 #'
 #' @examples
-#' firstsyt(c(4,2,1))
+#' firstsyt(c(4, 2, 1))
 firstsyt <- function(lambda){
   lambda <- checkPartition(lambda)
   .firstsyt(lambda, integer(sum(lambda)))
@@ -184,7 +186,7 @@ firstsyt <- function(lambda){
 
 #' Next tableau
 #' @description Given a standard Young tableau, returns the "next" one having
-#' the same shape.
+#'   the same shape.
 #'
 #' @param syt a standard Young tableau
 #'
@@ -193,7 +195,7 @@ firstsyt <- function(lambda){
 #' @export
 #'
 #' @examples
-#' syt <- firstsyt(c(4,2,1))
+#' syt <- firstsyt(c(4, 2, 1))
 #' nextsyt(syt)
 nextsyt <- function(syt){
   checkSYT(syt)

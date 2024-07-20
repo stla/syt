@@ -16,8 +16,8 @@ The hook lengths of the partition, given in a list.
 Hook lengths of a given integer partition.
 }
 \examples{
-hooklengths(c(4,2))
+hooklengths(c(4, 2))
 }
 \seealso{
-\code{\link{hooks}}
+\code{\link{hooks}}.
 }

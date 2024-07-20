@@ -15,9 +15,9 @@ A standard Young tableau of the same shape as \code{syt}, or
 }
 \description{
 Given a standard Young tableau, returns the "next" one having
-the same shape.
+  the same shape.
 }
 \examples{
-syt <- firstsyt(c(4,2,1))
+syt <- firstsyt(c(4, 2, 1))
 nextsyt(syt)
 }

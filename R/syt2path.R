@@ -16,7 +16,7 @@ whichRow <- function(M,x){
 #'
 #' @return A list of integer partitions, representing a path of the Young graph
 #' starting from the root vertex.
-#' @seealso \code{\link{gprocess2syt}}
+#' @seealso \code{\link{gprocess2syt}}.
 #' @export
 #'
 #' @examples
@@ -45,7 +45,7 @@ syt2gprocess <- function(syt){
 #' of integer partitions
 #'
 #' @return A standard Young tableau.
-#' @seealso \code{\link{syt2gprocess}}
+#' @seealso \code{\link{syt2gprocess}}.
 #' @export
 #'
 #' @examples

@@ -22,5 +22,5 @@ syt <- list(c(1,2,4), 3, 5)
 syt2gprocess(syt)
 }
 \seealso{
-\code{\link{gprocess2syt}}
+\code{\link{gprocess2syt}}.
 }

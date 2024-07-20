@@ -7,7 +7,7 @@
 all_sytx(lambda)
 }
 \arguments{
-\item{lambda}{shape, an integer partition}
+\item{lambda}{the shape, an integer partition}
 }
 \value{
 A list of standard Young tableaux.

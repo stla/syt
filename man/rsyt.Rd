@@ -16,5 +16,5 @@ A standard Young tableau of shape \code{lambda}.
 Uniform sampling of a standard Young tableau of a given shape.
 }
 \examples{
-rsyt(c(7,3,1))
+rsyt(c(7, 3, 1))
 }

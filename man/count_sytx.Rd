@@ -16,9 +16,9 @@ An integer, the number of standard Young tableaux of shape \code{lambda}.
 Number of standard Young tableaux of a given shape.
 }
 \examples{
-count_sytx(c(5,4,1))
-length(all_sytx(c(5,4,1)))
+count_sytx(c(5, 4, 1))
+length(all_sytx(c(5, 4, 1)))
 }
 \seealso{
-\code{\link{all_sytx}}
+\code{\link{all_sytx}}.
 }

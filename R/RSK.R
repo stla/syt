@@ -24,7 +24,7 @@ bump <- function(P, Q, e, i){
 #' @examples
 #' RS(c(1, 3, 6, 4, 7, 5, 2))
 RS <- function(sigma){
-  if(!setequal(sigma,seq_along(sigma))){
+  if(!setequal(sigma, seq_along(sigma))){
     stop("`sigma` is not a permutation", call. = FALSE)
   }
   sigma <- as.integer(sigma)

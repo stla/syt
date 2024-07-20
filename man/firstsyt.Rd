@@ -16,5 +16,5 @@ A standard Young tableau.
 Returns the "first" standard Young tableau of a given shape.
 }
 \examples{
-firstsyt(c(4,2,1))
+firstsyt(c(4, 2, 1))
 }

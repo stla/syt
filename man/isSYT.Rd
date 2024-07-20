@@ -16,6 +16,6 @@ A Boolean value.
 Checks whether a tableau is a standard Young tableau.
 }
 \examples{
-tbl <- list(c(1,2,6), c(3,5), 4)
+tbl <- list(c(1, 2, 6), c(3, 5), 4)
 isSYT(tbl)
 }

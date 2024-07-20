@@ -11,10 +11,11 @@ KostkaNumbers(n)
 }
 \value{
 An integer matrix, whose row names and column names encode the 
-  partitions.
+  partitions \eqn{\lambda} and \eqn{\mu} and whose entries are the 
+  Kostka numbers \eqn{K(\lambda,\mu)}.
 }
 \description{
-Computes the positive Kostka numbers for all integer partitions 
+Computes the Kostka numbers for all integer partitions 
   of a given weight
 }
 \examples{

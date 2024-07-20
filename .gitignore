@@ -38,3 +38,7 @@ rsconnect/
 
 # Personal
 inst/ztemp/
+
+# sublime text
+*.sublime-project
+*.sublime-workspace

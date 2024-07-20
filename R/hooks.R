@@ -4,12 +4,12 @@
 #' @param lambda integer partition
 #'
 #' @return The hooks of the partition in a list.
-#' @seealso \code{\link{hooklengths}}
+#' @seealso \code{\link{hooklengths}}.
 #' @export
 #' @importFrom partitions conjugate
 #'
 #' @examples
-#' hooks(c(4,2))
+#' hooks(c(4, 2))
 hooks <- function(lambda){
   lambda <- as.integer(checkPartition(lambda))
   dlambda <- partitions::conjugate(lambda)
@@ -34,11 +34,11 @@ hooks <- function(lambda){
 #' @param lambda an integer partition
 #'
 #' @return The hook lengths of the partition, given in a list.
-#' @seealso \code{\link{hooks}}
+#' @seealso \code{\link{hooks}}.
 #' @export
 #'
 #' @examples
-#' hooklengths(c(4,2))
+#' hooklengths(c(4, 2))
 hooklengths <- function(lambda){
   h <- hooks(lambda)
   lapply(h, function(x) unlist(lapply(x, function(y) sum(y)-1L)))
@@ -51,12 +51,12 @@ hooklengths <- function(lambda){
 #' @param lambda an integer partition, the shape
 #'
 #' @return An integer, the number of standard Young tableaux of shape \code{lambda}.
-#' @seealso \code{\link{all_sytx}}
+#' @seealso \code{\link{all_sytx}}.
 #' @export
 #'
 #' @examples
-#' count_sytx(c(5,4,1))
-#' length(all_sytx(c(5,4,1)))
+#' count_sytx(c(5, 4, 1))
+#' length(all_sytx(c(5, 4, 1)))
 count_sytx <- function(lambda){
   numterms <- c()
   denterms <- unlist(hooklengths(lambda))
