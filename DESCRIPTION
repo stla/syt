@@ -1,8 +1,8 @@
 Type: Package
 Package: syt
 Title: Young Tableaux
-Version: 0.4.0.9000
-Date: 2024-07-01
+Version: 0.5.0
+Date: 2024-07-22
 Author: Stéphane Laurent
 Maintainer: Stéphane Laurent <laurent_step@outlook.fr>
 Description: Deals with Young tableaux (field of combinatorics). For standard

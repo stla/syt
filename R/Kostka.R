@@ -8,7 +8,7 @@
 #' @return The Kostka number corresponding to \code{lambda} and \code{mu}.
 #' @export
 #' @importFrom utils head tail
-#' @seealso \code{\link{KostkaNumbersWithGivenMu}}, 
+#' @seealso \code{\link{KostkaNumbers}}, \code{\link{KostkaNumbersWithGivenMu}}, 
 #'   \code{\link{KostkaNumbersWithGivenLambda}}, 
 #'   \code{\link{skewKostkaNumbers}}.
 #'
@@ -203,7 +203,7 @@ KostkaNumber <- function(lambda, mu) {
 #' @return If \code{output="vector"}, this function returns a named vector. 
 #'   This vector is made of the positive Kostka numbers 
 #'   \eqn{K(\lambda,\mu)} and its names encode the partitions \eqn{\lambda}.
-#'   If \code{ouput="list"}, this function returns a list of lists. 
+#'   If \code{output="list"}, this function returns a list of lists. 
 #'   Each of these lists has two 
 #'   elements. The first one is named \code{lambda} and is an integer 
 #'   partition, and the second one is named \code{value} and is a positive 
@@ -211,7 +211,7 @@ KostkaNumber <- function(lambda, mu) {
 #'   compute the Kostka numbers with this function than computing the 
 #'   individual Kostka numbers with the function \code{\link{KostkaNumber}}.
 #' @export
-#' @seealso \code{\link{KostkaNumber}}, 
+#' @seealso \code{\link{KostkaNumber}}, \code{\link{KostkaNumbers}}, 
 #'   \code{\link{KostkaNumbersWithGivenLambda}}.
 #'
 #' @examples
@@ -239,7 +239,7 @@ KostkaNumbersWithGivenMu <- function(mu, output = "vector") {
 #'   This vector is made of the non-zero (i.e. positive) Kostka numbers 
 #'   \eqn{K(\lambda,\mu)}, which are integers, and its names encode the 
 #'   partitions \eqn{\mu}.
-#'   If \code{ouput="list"}, this function returns a list of lists. 
+#'   If \code{output="list"}, this function returns a list of lists. 
 #'   Each of these lists has two 
 #'   elements. The first one is named \code{mu} and is an integer 
 #'   partition, and the second one is named \code{value} and is a positive 
@@ -249,7 +249,7 @@ KostkaNumbersWithGivenMu <- function(mu, output = "vector") {
 #' @export
 #' @importFrom partitions conjugate
 #' @importFrom utils tail
-#' @seealso \code{\link{KostkaNumber}}, 
+#' @seealso \code{\link{KostkaNumber}}, \code{\link{KostkaNumbers}}, 
 #'   \code{\link{KostkaNumbersWithGivenMu}}.
 #'
 #' @examples
@@ -322,13 +322,15 @@ KostkaNumbersWithGivenLambda <- function(lambda, output = "vector") {
 
 #' @title Kostka numbers for all partitions of a given weight
 #' @description Computes the Kostka numbers for all integer partitions 
-#'   of a given weight
+#'   of a given weight.
 #' @param n positive integer, the weight of the partitions
 #'
 #' @return An integer matrix, whose row names and column names encode the 
 #'   partitions \eqn{\lambda} and \eqn{\mu} and whose entries are the 
 #'   Kostka numbers \eqn{K(\lambda,\mu)}.
 #' @export
+#' @seealso \code{\link{KostkaNumbersWithGivenLambda}}, 
+#'   \code{\link{KostkaNumbersWithGivenMu}}, \code{\link{skewKostkaNumbers}}.
 #'
 #' @examples
 #' KostkaNumbers(4)

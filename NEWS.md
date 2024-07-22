@@ -22,7 +22,7 @@ given skew partition.
 `K(lambda, mu)` for a given partition `lambda`.
 
 * New function `KostkaNumbers`, to get all the Kostka numbers 
-`K(lambda, mu)` for given partitions `lambda` and `mu` of a given weight.
+`K(lambda, mu)` for all partitions `lambda` and `mu` of a given weight.
 
 
 

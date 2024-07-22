@@ -14,7 +14,7 @@ A list of two standard Young tableaux.
 }
 \description{
 Pair of standard Young tableaux given from a permutation
-by the Robinson-Schensted correspondence.
+  by the Robinson-Schensted correspondence.
 }
 \examples{
 RS(c(1, 3, 6, 4, 7, 5, 2))

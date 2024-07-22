@@ -14,7 +14,7 @@ bump <- function(P, Q, e, i){
 
 #' Robinson-Schensted correspondence
 #' @description Pair of standard Young tableaux given from a permutation
-#' by the Robinson-Schensted correspondence.
+#'   by the Robinson-Schensted correspondence.
 #'
 #' @param sigma a permutation given as a vector of integers
 #'

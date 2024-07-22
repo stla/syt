@@ -17,7 +17,7 @@ If \code{output="vector"}, this function returns a named vector.
   This vector is made of the non-zero (i.e. positive) Kostka numbers 
   \eqn{K(\lambda,\mu)}, which are integers, and its names encode the 
   partitions \eqn{\mu}.
-  If \code{ouput="list"}, this function returns a list of lists. 
+  If \code{output="list"}, this function returns a list of lists. 
   Each of these lists has two 
   elements. The first one is named \code{mu} and is an integer 
   partition, and the second one is named \code{value} and is a positive 
@@ -33,6 +33,6 @@ Lists all positive Kostka numbers \eqn{K(\lambda,\mu)} with
 KostkaNumbersWithGivenLambda(c(2, 1, 1))
 }
 \seealso{
-\code{\link{KostkaNumber}}, 
+\code{\link{KostkaNumber}}, \code{\link{KostkaNumbers}}, 
   \code{\link{KostkaNumbersWithGivenMu}}.
 }

@@ -16,8 +16,12 @@ An integer matrix, whose row names and column names encode the
 }
 \description{
 Computes the Kostka numbers for all integer partitions 
-  of a given weight
+  of a given weight.
 }
 \examples{
 KostkaNumbers(4)
+}
+\seealso{
+\code{\link{KostkaNumbersWithGivenLambda}}, 
+  \code{\link{KostkaNumbersWithGivenMu}}, \code{\link{skewKostkaNumbers}}.
 }

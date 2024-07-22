@@ -14,12 +14,12 @@ The path as a list, starting from the root vertex \code{1}.
 }
 \description{
 Samples a path of the Young graph according to the Plancherel
-growth process.
+  growth process.
 }
 \examples{
 rgprocess(7)
 }
 \seealso{
 \code{\link{gprocess2syt}} and \code{\link{syt2gprocess}} to convert
-a Young path to a standard Young tableau and conversely.
+  a Young path to a standard Young tableau and conversely.
 }

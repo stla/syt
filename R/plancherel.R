@@ -5,7 +5,7 @@ connectedParts <- function(lambda0){
   for(i in seq_along(lambda0)[-1L]){
     if(lambda0[i] < lambda0[i-1L]){
       lambda <- lambda0
-      lambda[i] <- lambda[i]+1L
+      lambda[i] <- lambda[i] + 1L
       out <- c(out, list(lambda))
     }
   }
@@ -14,7 +14,7 @@ connectedParts <- function(lambda0){
 
 #' Plancherel growth process
 #' @description Samples a path of the Young graph according to the Plancherel
-#' growth process.
+#'   growth process.
 #'
 #' @param n the size of the path to be sampled
 #'
@@ -22,7 +22,7 @@ connectedParts <- function(lambda0){
 #' @export
 #'
 #' @seealso \code{\link{gprocess2syt}} and \code{\link{syt2gprocess}} to convert
-#' a Young path to a standard Young tableau and conversely.
+#'   a Young path to a standard Young tableau and conversely.
 #'
 #' @examples
 #' rgprocess(7)
