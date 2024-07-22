@@ -17,6 +17,6 @@ Representation of a tableau as a sparse matrix; only for a
   tableau with numeric or logical entries.
 }
 \examples{
-syt <- list(c(1,2,6), c(3,5), 4)
-syt2matrix(syt)
+syt <- list(c(1, 2, 6), c(3, 5), 4)
+tableau2matrix(syt)
 }

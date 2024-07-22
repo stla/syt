@@ -20,5 +20,5 @@ M <- rbind(c(1,2,6), c(3,5,0), c(4,0,0))
 matrix2syt(M)
 }
 \seealso{
-\code{\link{syt2matrix}}
+\code{\link{syt2matrix}}.
 }

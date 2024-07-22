@@ -20,9 +20,9 @@ This function is the same as \code{\link{tableau2matrix}} except that
   in addition it checks that the given tableau is a standard Young tableau.
 }
 \examples{
-syt <- list(c(1,2,6), c(3,5), 4)
+syt <- list(c(1, 2, 6), c(3, 5), 4)
 syt2matrix(syt)
 }
 \seealso{
-\code{\link{matrix2syt}}
+\code{\link{matrix2syt}}.
 }

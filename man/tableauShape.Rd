@@ -10,7 +10,9 @@ tableauShape(tableau)
 \item{tableau}{a tableau (list of vectors having the same mode)}
 }
 \value{
-The shape of the tableau (an integer partition).
+The shape of the tableau. This is an integer partition whose 
+  \code{i}-th part is the number of boxes in the \code{i}-th row of 
+  the tableau.
 }
 \description{
 The shape of a tableau.
