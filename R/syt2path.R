@@ -10,12 +10,12 @@ whichRow <- function(M,x){
 
 #' Tableau as growth process
 #' @description Converts a standard Young tableau to its corresponding growth
-#' process of partitions.
+#'   process of partitions.
 #'
 #' @param syt standard Young tableau
 #'
 #' @return A list of integer partitions, representing a path of the Young graph
-#' starting from the root vertex.
+#'   starting from the root vertex.
 #' @seealso \code{\link{gprocess2syt}}.
 #' @export
 #'

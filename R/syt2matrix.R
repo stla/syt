@@ -15,8 +15,8 @@
 #' @export
 #'
 #' @examples
-#' syt <- list(c(1,2,6), c(3,5), 4)
-#' syt2matrix(syt)
+#' syt <- list(c(1, 2, 6), c(3, 5), 4)
+#' tableau2matrix(syt)
 tableau2matrix <- function(tableau){
   stopifnot(isTableau(tableau))
   if(!is.element(modeTableau(tableau), c("numeric", "logical"))) {
@@ -34,7 +34,7 @@ tableau2matrix <- function(tableau){
 #' @param syt a standard Young tableau
 #'
 #' @return A sparse matrix.
-#' @seealso \code{\link{matrix2syt}}
+#' @seealso \code{\link{matrix2syt}}.
 #' @importFrom Matrix sparseMatrix
 #' @export
 #' 
@@ -42,7 +42,7 @@ tableau2matrix <- function(tableau){
 #'   in addition it checks that the given tableau is a standard Young tableau.
 #'
 #' @examples
-#' syt <- list(c(1,2,6), c(3,5), 4)
+#' syt <- list(c(1, 2, 6), c(3, 5), 4)
 #' syt2matrix(syt)
 syt2matrix <- function(syt){
   checkSYT(syt)
@@ -61,7 +61,7 @@ syt2matrix <- function(syt){
 #' @param M a matrix
 #'
 #' @return A standard Young tableau.
-#' @seealso \code{\link{syt2matrix}}
+#' @seealso \code{\link{syt2matrix}}.
 #' @export
 #'
 #' @examples

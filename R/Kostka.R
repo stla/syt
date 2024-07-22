@@ -337,7 +337,7 @@ KostkaNumbers <- function(n) {
   if(n == 0L) {
     Knumbers <- matrix(1L)
     colnames(Knumbers) <- rownames(Knumbers) <- partitionAsString(integer(0L))
-    return(Knumbsers)
+    return(Knumbers)
   }
   lambdas <- listOfPartitions(n)
   lambdasAsStrings <-
